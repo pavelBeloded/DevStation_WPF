@@ -1,0 +1,460 @@
+<UserControl x:Class="DevStation.Views.Pages.SnippetDetailPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Background="{StaticResource AppBackground}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40,32,40,48">
+
+            <!-- ─── Breadcrumbs ─── -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Style="{StaticResource GhostButton}"
+                        Command="{Binding NavigateBackCommand}"
+                        Padding="0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBlock Text="Back" Foreground="{StaticResource AccentBrush}"
+                                   FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                    </StackPanel>
+                </Button>
+                <TextBlock Text=" / " Foreground="{StaticResource TextMuted}"
+                           FontSize="13" Margin="6,0" VerticalAlignment="Center"/>
+                <TextBlock Text="Snippets" Foreground="{StaticResource TextSecondary}"
+                           FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                <TextBlock Text=" / " Foreground="{StaticResource TextMuted}"
+                           FontSize="13" Margin="6,0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Snippet.Title}" Foreground="{StaticResource TextBody}"
+                           FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" MaxWidth="320"/>
+            </StackPanel>
+
+            <!-- ─── Hero ─── -->
+            <Grid Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="310"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: ID tag + Title + Meta row -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Foreground="{StaticResource TextMuted}"
+                                   FontFamily="Consolas" FontSize="11">
+                            <Run Text="ID:"/>
+                            <Run Text="{Binding Snippet.Id, Mode=OneWay}"
+                                 Foreground="{StaticResource AccentBrush}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <TextBlock Text="{Binding Snippet.Title}" Style="{StaticResource HeroTitle}"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="{Binding AuthorName}"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontFamily="Consolas" FontSize="12"
+                                   VerticalAlignment="Center"/>
+
+                        <TextBlock Text="·" Foreground="{StaticResource TextMuted}"
+                                   FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
+                        <Border Background="{StaticResource CardBackground}"
+                                BorderBrush="{StaticResource BorderDefault}"
+                                BorderThickness="1" CornerRadius="999" Padding="9,4"
+                                Visibility="{Binding HasLanguage, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock Text="{Binding Snippet.Language}"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+
+                        <TextBlock Text="·" Foreground="{StaticResource TextMuted}"
+                                   FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Snippet.ViewCount, StringFormat='{}{0} views'}"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"/>
+
+                        <TextBlock Text="·" Foreground="{StaticResource TextMuted}"
+                                   FontSize="12" Margin="10,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding CreatedAtText}"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Right: Stats mini-cards -->
+                <Grid Grid.Column="2" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource StatMiniCard}">
+                        <StackPanel>
+                            <TextBlock Text="VIEWS" Style="{StaticResource SectionLabel}"/>
+                            <TextBlock Text="{Binding Snippet.ViewCount}"
+                                       FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontFamily="Segoe UI" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource StatMiniCard}">
+                        <StackPanel>
+                            <TextBlock Text="INSTALLS" Style="{StaticResource SectionLabel}"/>
+                            <TextBlock Text="{Binding InstallCount}"
+                                       FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontFamily="Segoe UI" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="4" Style="{StaticResource StatMiniCard}">
+                        <StackPanel>
+                            <TextBlock Text="LINES" Style="{StaticResource SectionLabel}"/>
+                            <TextBlock Text="{Binding LineCount}"
+                                       FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontFamily="Segoe UI" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <!-- ─── Separator ─── -->
+            <Border Height="1" Background="{StaticResource BorderSubtle}" Margin="0,22,0,20"/>
+
+            <!-- ─── Action bar ─── -->
+            <WrapPanel Margin="0,0,0,0">
+                <!-- INSTALL (чужой опубликованный, не установлен) -->
+                <Button Content="INSTALL SNIPPET" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding InstallCommand}"/>
+
+                <!-- USE (установлен или свой опубликованный) -->
+                <Button Content="USE — Copy Code" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanUse, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding UseSnippetCommand}"/>
+
+                <!-- Favorite toggle (установлен, не свой) -->
+                <Button Style="{StaticResource OutlinedButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanFavorite, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding ToggleFavoriteCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="13"
+                                   VerticalAlignment="Center" Margin="0,0,6,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="&#xE734;"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFavorite}" Value="True">
+                                            <Setter Property="Text" Value="&#xE735;"/>
+                                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock FontFamily="Segoe UI" FontSize="13" VerticalAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="Favorite"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFavorite}" Value="True">
+                                            <Setter Property="Text" Value="Favorited"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <!-- Remove from library (установлен, не свой) -->
+                <Button Content="Remove from Library" Style="{StaticResource GhostButton}"
+                        Foreground="{StaticResource StatusError}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanUninstall, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding UninstallCommand}"/>
+
+                <!-- Draft: Edit + Send to Review + Delete -->
+                <Button Content="Edit" Style="{StaticResource OutlinedButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanEditAndSubmit, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding EditCommand}"/>
+                <Button Content="Send to Review" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanEditAndSubmit, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding SubmitForReviewCommand}"/>
+                <Button Content="Delete" Style="{StaticResource GhostButton}"
+                        Foreground="{StaticResource StatusError}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanEditAndSubmit, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding DeleteCommand}"/>
+
+                <!-- Rejected: Edit + Resubmit -->
+                <Button Content="Edit" Style="{StaticResource OutlinedButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding WasRejected, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding EditCommand}"/>
+                <Button Content="Resubmit" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding WasRejected, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding SubmitForReviewCommand}"/>
+
+                <!-- Admin: edit pending snippet -->
+                <Button Content="Admin: Edit Snippet" Style="{StaticResource OutlinedButton}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanAdminEdit, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding EditCommand}"/>
+
+                <!-- Admin: permanent delete -->
+                <Button Content="Admin: Delete Snippet" Style="{StaticResource GhostButton}"
+                        Foreground="{StaticResource StatusError}"
+                        Margin="0,0,8,8"
+                        Visibility="{Binding CanAdminDelete, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding AdminDeleteCommand}"/>
+            </WrapPanel>
+
+            <!-- ─── Status banners ─── -->
+            <Border Background="{StaticResource AccentMutedBrush}"
+                    BorderBrush="{StaticResource AccentBrush}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,10" Margin="0,12,0,0"
+                    Visibility="{Binding AwaitingReview, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE9F5;" FontFamily="Segoe MDL2 Assets" FontSize="13"
+                               Foreground="{StaticResource AccentBrush}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="Awaiting review — this snippet is pending moderation"
+                               Foreground="{StaticResource AccentBrush}"
+                               FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{StaticResource StatusErrorMutedBrush}"
+                    BorderBrush="{StaticResource StatusError}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,10" Margin="0,12,0,0"
+                    Visibility="{Binding WasRejected, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Rejected" Foreground="{StaticResource StatusError}"
+                               FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding RejectionComment, StringFormat=' — {0}'}"
+                               Foreground="{StaticResource TextSecondary}"
+                               FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{StaticResource StatusReadyMutedBrush}"
+                    BorderBrush="{StaticResource StatusReady}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,10" Margin="0,12,0,0"
+                    Visibility="{Binding WasPublished, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE8FB;" FontFamily="Segoe MDL2 Assets" FontSize="13"
+                               Foreground="{StaticResource StatusReady}"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="Published — visible to all users in the global pool"
+                               Foreground="{StaticResource StatusReady}"
+                               FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ─── Two-column content grid ─── -->
+            <Grid Margin="0,24,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="280"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ═══ LEFT COLUMN ═══ -->
+                <StackPanel Grid.Column="0">
+
+                    <!-- Code panel -->
+                    <Border Style="{StaticResource CardNoPadding}" ClipToBounds="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Panel header -->
+                            <Border Grid.Row="0" Padding="14,10"
+                                    Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,0,0,1">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="&#xE943;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Foreground="{StaticResource TextSecondary}"
+                                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding FileName}"
+                                                   FontFamily="Consolas" FontSize="12"
+                                                   Foreground="{StaticResource TextPrimary}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding FileExtension}"
+                                                   FontFamily="Consolas" FontSize="12"
+                                                   Foreground="{StaticResource AccentBrush}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Content="Copy" Style="{StaticResource GhostButton}"
+                                            HorizontalAlignment="Right"
+                                            Command="{Binding UseSnippetCommand}"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Code area -->
+                            <Border Grid.Row="1" Background="{StaticResource CodeBackground}"
+                                    Padding="16" MinHeight="200">
+                                <TextBox Style="{StaticResource CodeInput}" IsReadOnly="True"
+                                         Text="{Binding Snippet.Code, Mode=OneWay}"
+                                         AcceptsReturn="True" TextWrapping="NoWrap"
+                                         VerticalScrollBarVisibility="Auto"
+                                         HorizontalScrollBarVisibility="Auto"
+                                         MinHeight="180"/>
+                            </Border>
+
+                            <!-- Panel footer -->
+                            <Border Grid.Row="2" Padding="14,8"
+                                    Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,1,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}">
+                                        <Run Text="Lines:"/>
+                                        <Run Text="{Binding LineCount, Mode=OneWay}"
+                                             Foreground="{StaticResource TextBody}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="  ·  " FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextMuted}" Margin="4,0"/>
+                                    <TextBlock FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}">
+                                        <Run Text="Size:"/>
+                                        <Run Text="{Binding CodeSizeText, Mode=OneWay}"
+                                             Foreground="{StaticResource TextBody}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="  ·  " FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextMuted}" Margin="4,0"
+                                               Visibility="{Binding HasLanguage, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <TextBlock FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               Visibility="{Binding HasLanguage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <Run Text="Lang:"/>
+                                        <Run Text="{Binding Snippet.Language, Mode=OneWay}"
+                                             Foreground="{StaticResource TextBody}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Description section -->
+                    <StackPanel Margin="0,32,0,0"
+                                Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,14"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="// ABOUT" Style="{StaticResource SectionLabel}"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Description" Style="{StaticResource SectionTitle}"
+                                       Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Border Style="{StaticResource Card}" Padding="20,16">
+                            <TextBlock Text="{Binding Snippet.Description}"
+                                       Style="{StaticResource CardBody}" Margin="0"/>
+                        </Border>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- ═══ RIGHT COLUMN (sidebar) ═══ -->
+                <StackPanel Grid.Column="2">
+
+                    <!-- Metadata card -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="// METADATA" Style="{StaticResource SectionLabel}"
+                                       Margin="0,0,0,16"/>
+
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="AUTHOR" Style="{StaticResource FieldLabel}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                                <TextBlock Text="{Binding AuthorName}"
+                                           FontFamily="Consolas" FontSize="12"
+                                           Foreground="{StaticResource TextBody}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,12"
+                                  Visibility="{Binding HasLanguage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="LANGUAGE" Style="{StaticResource FieldLabel}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                                <TextBlock Text="{Binding Snippet.Language}"
+                                           FontFamily="Consolas" FontSize="12"
+                                           Foreground="{StaticResource TextBody}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="CREATED" Style="{StaticResource FieldLabel}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                                <TextBlock Text="{Binding CreatedAtText}"
+                                           FontFamily="Consolas" FontSize="12"
+                                           Foreground="{StaticResource TextBody}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid>
+                                <TextBlock Text="STATUS" Style="{StaticResource FieldLabel}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                                <TextBlock Text="{Binding StatusText}"
+                                           FontFamily="Consolas" FontSize="12"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Tags card -->
+                    <Border Style="{StaticResource Card}" Margin="0,16,0,0"
+                            Visibility="{Binding HasTags, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel>
+                            <TextBlock Text="// TAGS" Style="{StaticResource SectionLabel}"
+                                       Margin="0,0,0,14"/>
+                            <ItemsControl ItemsSource="{Binding TagItems}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{StaticResource CodeBackground}"
+                                                CornerRadius="3" Padding="8,3" Margin="0,0,6,6">
+                                            <TextBlock Text="{Binding}"
+                                                       Foreground="{StaticResource AccentBrush}"
+                                                       FontFamily="Consolas" FontSize="11"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,676 @@
+<UserControl x:Class="DevStation.Views.Pages.DocumentationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:DevStation.ViewModels"
+             Background="{StaticResource AppBackground}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- LEFT: Table of Contents            -->
+        <!-- ══════════════════════════════════ -->
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBackground}"
+                BorderBrush="{StaticResource BorderSubtle}"
+                BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,32,0,16">
+
+                    <TextBlock Text="ON THIS PAGE" Style="{StaticResource FieldLabel}"
+                               Margin="16,0,16,16"/>
+
+                    <Button Content="Getting Started"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="getting-started"/>
+
+                    <TextBlock Text="FEATURES" Style="{StaticResource FieldLabel}"
+                               Margin="16,20,16,8"/>
+
+                    <Button Content="SVG Converter"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="svg-converter"/>
+
+                    <Button Content="Image Optimizer"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="image-optimizer"/>
+
+                    <Button Content="MDN Search"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="mdn-search"/>
+
+                    <Button Content="Mock Generator"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="mock-generator"/>
+
+                    <Button Content="Snippets"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="snippets"/>
+
+                    <TextBlock Text="OTHER" Style="{StaticResource FieldLabel}"
+                               Margin="16,20,16,8"/>
+
+                    <Button Content="FAQ"
+                            Style="{StaticResource SidebarItem}"
+                            Command="{Binding ScrollToCommand}"
+                            CommandParameter="faq"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- RIGHT: Content                     -->
+        <!-- ══════════════════════════════════ -->
+        <ScrollViewer Grid.Column="1"
+                      x:Name="MainScrollViewer"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="48,32,48,48">
+
+                <!-- ════════════════════════════ -->
+                <!-- GETTING STARTED              -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionGettingStarted">
+
+                    <TextBlock Text="Getting Started" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"
+                               Text="DevStation is a desktop productivity tool for frontend developers."/>
+
+                    <TextBlock Text="What is DevStation?" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,24"
+                               Foreground="{StaticResource TextBody}">
+                        <Run Text="DevStation is an all-in-one desktop toolkit that automates repetitive frontend tasks. Instead of switching between multiple tools and browser tabs, everything you need is in one place — SVG conversion, image optimization, documentation lookup, mock data generation, and a personal snippet library."/>
+                    </TextBlock>
+
+                    <TextBlock Text="Quick Start" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,16"/>
+
+                    <!-- Step 1 -->
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="{StaticResource AccentMutedBrush}"
+                                    CornerRadius="14" HorizontalAlignment="Left">
+                                <TextBlock Text="1" FontSize="13" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Create an account" Style="{StaticResource CardTitleSmall}"/>
+                                <TextBlock Text="Register on the Login screen. The first registered user automatically becomes Admin."
+                                           Style="{StaticResource CardBody}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Step 2 -->
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="{StaticResource AccentMutedBrush}"
+                                    CornerRadius="14" HorizontalAlignment="Left">
+                                <TextBlock Text="2" FontSize="13" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Explore the tools" Style="{StaticResource CardTitleSmall}"/>
+                                <TextBlock Text="Navigate using the sidebar. Each tool is accessible with one click."
+                                           Style="{StaticResource CardBody}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Step 3 -->
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,32">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="{StaticResource AccentMutedBrush}"
+                                    CornerRadius="14" HorizontalAlignment="Left">
+                                <TextBlock Text="3" FontSize="13" FontWeight="Bold"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Build your snippet library" Style="{StaticResource CardTitleSmall}"/>
+                                <TextBlock Text="Install snippets from the global pool or create your own. Use the search bar to copy any snippet instantly."
+                                           Style="{StaticResource CardBody}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,0,0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- SVG CONVERTER               -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionSvgConverter">
+
+                    <TextBlock Text="SVG Converter" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Convert SVG files into ready-to-use React components."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <TextBlock Text="How it works" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,16"
+                               Foreground="{StaticResource TextBody}"
+                               Text="Drop an SVG file or paste SVG code into the left panel. DevStation instantly converts it into a typed React component with configurable props."/>
+
+                    <TextBlock Text="Output example" Style="{StaticResource FieldLabel}"
+                               Margin="0,0,0,8"/>
+                    <Border Background="{StaticResource CodeBackground}"
+                            BorderBrush="{StaticResource BorderDefault}"
+                            BorderThickness="1" CornerRadius="6">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource AppBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,0,0,1"
+                                    CornerRadius="6,6,0,0" Padding="12,8">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="10" Height="10" Fill="#FF5F57" Margin="0,0,6,0"/>
+                                    <Ellipse Width="10" Height="10" Fill="#FFBD2E" Margin="0,0,6,0"/>
+                                    <Ellipse Width="10" Height="10" Fill="#28C840" Margin="0,0,12,0"/>
+                                    <TextBlock Text="ConvertedComponent.jsx" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               FontFamily="Consolas" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBox Grid.Row="1" Padding="16,12"
+                                     Style="{StaticResource CodeInput}"
+                                     IsReadOnly="True" Background="Transparent"
+                                     BorderThickness="0" TextWrapping="Wrap"
+                                     Text="// Generated via DevStation SVG Converter&#10;import React from &quot;react&quot;;&#10;&#10;const ConvertedComponent = ({ size = 24, color = &quot;currentColor&quot; }) => (&#10;  &lt;svg width={size} height={size} viewBox=&quot;0 0 24 24&quot;&gt;&#10;    &lt;path d=&quot;M12 2C6.48...&quot; fill={color}/&gt;&#10;  &lt;/svg&gt;&#10;);&#10;&#10;export default ConvertedComponent;"/>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Text="Supported input formats" Style="{StaticResource FieldLabel}"
+                               Margin="0,20,0,8"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="{StaticResource AccentMutedBrush}" CornerRadius="4"
+                                Padding="10,4" Margin="0,0,8,0">
+                            <TextBlock Text=".svg" Foreground="{StaticResource AccentBrush}"
+                                       FontSize="12" FontFamily="Consolas"/>
+                        </Border>
+                        <Border Background="{StaticResource AccentMutedBrush}" CornerRadius="4"
+                                Padding="10,4">
+                            <TextBlock Text=".xml" Foreground="{StaticResource AccentBrush}"
+                                       FontSize="12" FontFamily="Consolas"/>
+                        </Border>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- IMAGE OPTIMIZER             -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionImageOptimizer">
+
+                    <TextBlock Text="Image Optimizer" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Compress and convert images to WebP format for the web."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <TextBlock Text="How it works" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,20"
+                               Foreground="{StaticResource TextBody}"
+                               Text="Drop one or multiple images into the drop zone. DevStation processes them in a queue, converting each to WebP with maximum compression. Download individually or all at once."/>
+
+                    <TextBlock Text="Limits &amp; formats" Style="{StaticResource FieldLabel}"
+                               Margin="0,0,0,12"/>
+                    <Border Style="{StaticResource Card}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="INPUT" Style="{StaticResource FieldLabel}"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="PNG, JPG, WEBP, SVG"
+                                           Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                <TextBlock Text="Max 25MB per file"
+                                           Foreground="{StaticResource TextSecondary}"
+                                           FontSize="12" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="OUTPUT" Style="{StaticResource FieldLabel}"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="WebP"
+                                           Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                <TextBlock Text="Average 60-70% size reduction"
+                                           Foreground="{StaticResource TextSecondary}"
+                                           FontSize="12" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- MDN SEARCH                  -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionMdnSearch">
+
+                    <TextBlock Text="MDN Search" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Live JavaScript and Web API documentation lookup with offline cache."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <TextBlock Text="Cache-first strategy" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,20"
+                               Foreground="{StaticResource TextBody}"
+                               Text="Every search result is automatically saved to a local database. Next time you search for the same term, results load instantly without an internet connection. The '● cached' badge indicates when results are served from the local cache."/>
+
+                    <TextBlock Text="How search works" Style="{StaticResource FieldLabel}"
+                               Margin="0,0,0,12"/>
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="1."
+                                           Foreground="{StaticResource AccentBrush}"
+                                           FontWeight="Bold" FontSize="13"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="You type a query — search triggers after 400ms pause"
+                                           Foreground="{StaticResource TextBody}"
+                                           TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="2."
+                                           Foreground="{StaticResource AccentBrush}"
+                                           FontWeight="Bold" FontSize="13"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="Local database is checked first — instant results if cached"
+                                           Foreground="{StaticResource TextBody}"
+                                           TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="3."
+                                           Foreground="{StaticResource AccentBrush}"
+                                           FontWeight="Bold" FontSize="13"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="If not cached — MDN API is queried and results are saved locally"
+                                           Foreground="{StaticResource TextBody}"
+                                           TextWrapping="Wrap"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="4."
+                                           Foreground="{StaticResource AccentBrush}"
+                                           FontWeight="Bold" FontSize="13"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="Click a result to load full details: Summary, Syntax, Description, Examples"
+                                           Foreground="{StaticResource TextBody}"
+                                           TextWrapping="Wrap"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- MOCK GENERATOR              -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionMockGenerator">
+
+                    <TextBlock Text="Mock Data Generator" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Generate production-ready fake data in JSON or SQL format."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <TextBlock Text="Available field types" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,16"/>
+
+                    <Border Style="{StaticResource CardNoPadding}">
+                        <StackPanel>
+
+                            <!-- Table header -->
+                            <Border Background="{StaticResource AppBackground}"
+                                    Padding="16,10" CornerRadius="8,8,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="TYPE"
+                                               Style="{StaticResource TableHeader}"/>
+                                    <TextBlock Grid.Column="1" Text="DESCRIPTION"
+                                               Style="{StaticResource TableHeader}"/>
+                                    <TextBlock Grid.Column="2" Text="EXAMPLE OUTPUT"
+                                               Style="{StaticResource TableHeader}"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- UUID_V4 -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="UUID_V4"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Random UUID"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="&quot;8f23c91a-7b3e...&quot;"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- PERSON_NAME -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="PERSON_NAME"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Full name"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="&quot;Alexander Sterling&quot;"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- INTERNET_EMAIL -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="INTERNET_EMAIL"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Email address"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="&quot;a.sterling@devstation.io&quot;"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- NUMBER -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="NUMBER"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Random integer"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="42"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- BOOLEAN -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="BOOLEAN"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="True or false"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="true"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- DATE -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="DATE"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="ISO date string"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="&quot;2024-03-15&quot;"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+                            <Rectangle Style="{StaticResource Divider}"/>
+
+                            <!-- PHONE -->
+                            <Border Padding="16,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="PHONE"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Phone number"
+                                               Foreground="{StaticResource TextBody}" FontSize="13"/>
+                                    <TextBlock Grid.Column="2" Text="&quot;+1-555-867-5309&quot;"
+                                               FontFamily="Consolas" FontSize="12"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Grid>
+                            </Border>
+
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- SNIPPETS                    -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionSnippets">
+
+                    <TextBlock Text="Snippet Library" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Personal and community-driven code snippet management."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Border Background="{StaticResource AccentMutedBrush}"
+                                        CornerRadius="4" Padding="8,3"
+                                        HorizontalAlignment="Left" Margin="0,0,0,10">
+                                    <TextBlock Text="GLOBAL" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                </Border>
+                                <TextBlock Text="Community Pool" Style="{StaticResource CardTitleSmall}"/>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                           Text="Snippets approved by admins. Available to all users via Install button."/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Border Background="{StaticResource InputBackground}"
+                                        BorderBrush="{StaticResource BorderDefault}"
+                                        BorderThickness="1" CornerRadius="4"
+                                        Padding="8,3" HorizontalAlignment="Left" Margin="0,0,0,10">
+                                    <TextBlock Text="LOCAL" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </Border>
+                                <TextBlock Text="Personal Library" Style="{StaticResource CardTitleSmall}"/>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                           Text="Your private snippets. Only you can see them unless submitted for review."/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <TextBlock Text="Quick access via search bar" Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,12"
+                               Foreground="{StaticResource TextBody}"
+                               Text="The fastest way to use snippets is through the top search bar. Type the snippet name, select from the dropdown, and press Enter — the code is instantly copied to your clipboard."/>
+
+                    <TextBlock Text="Snippet lifecycle" Style="{StaticResource FieldLabel}"
+                               Margin="0,8,0,12"/>
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Border Background="{StaticResource InputBackground}"
+                                    CornerRadius="4" Padding="10,6">
+                                <TextBlock Text="Draft" Foreground="{StaticResource TextSecondary}"
+                                           FontSize="12"/>
+                            </Border>
+                            <TextBlock Text=" → " Foreground="{StaticResource AccentBrush}"
+                                       FontSize="16" VerticalAlignment="Center"/>
+                            <Border Background="{StaticResource InputBackground}"
+                                    CornerRadius="4" Padding="10,6">
+                                <TextBlock Text="Pending Review" Foreground="{StaticResource AccentBrush}"
+                                           FontSize="12"/>
+                            </Border>
+                            <TextBlock Text=" → " Foreground="{StaticResource AccentBrush}"
+                                       FontSize="16" VerticalAlignment="Center"/>
+                            <Border Background="{StaticResource InputBackground}"
+                                    BorderBrush="{StaticResource StatusReady}"
+                                    BorderThickness="1" CornerRadius="4" Padding="10,6">
+                                <TextBlock Text="Published" Foreground="{StaticResource StatusReady}"
+                                           FontSize="12"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
+
+                <!-- ════════════════════════════ -->
+                <!-- FAQ                         -->
+                <!-- ════════════════════════════ -->
+                <StackPanel x:Name="sectionFaq">
+
+                    <TextBlock Text="FAQ" Style="{StaticResource PageTitle}"/>
+                    <TextBlock Text="Frequently asked questions."
+                               Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="Who becomes Admin?" Style="{StaticResource CardTitleSmall}"/>
+                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                       Text="The first registered user automatically receives the Admin role. Admins can promote other users to Admin from the Account page."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="Does MDN Search work offline?" Style="{StaticResource CardTitleSmall}"/>
+                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                       Text="Yes — previously searched terms are cached locally. If you've searched for 'Array.map' before, it loads instantly without internet. New searches require a connection."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="How do I share a snippet with the community?" Style="{StaticResource CardTitleSmall}"/>
+                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                       Text="Open your snippet, click 'Send to Review'. An admin will review it. If approved, it becomes visible to all users in the Global Pool."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="What image formats does the optimizer support?" Style="{StaticResource CardTitleSmall}"/>
+                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                       Text="Input: PNG, JPG, WEBP, SVG (max 25MB per file). Output: WebP. Average size reduction is 60-70% compared to the original."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,48">
+                        <StackPanel>
+                            <TextBlock Text="How do I use snippets quickly without opening the app?" Style="{StaticResource CardTitleSmall}"/>
+                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CardBody}"
+                                       Text="Use the search bar at the top. Type the snippet name and press Enter — the code copies to clipboard immediately. No need to navigate to the Snippets page."/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

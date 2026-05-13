@@ -1,0 +1,268 @@
+<UserControl x:Class="DevStation.Views.Pages.CreateSnippetPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Background="{StaticResource AppBackground}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40,32,40,48">
+
+            <!-- ── Breadcrumbs ── -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,28">
+                <Button Style="{StaticResource GhostButton}" Padding="0" Height="20"
+                        Command="{Binding NavigateBackCommand}">
+                    <TextBlock FontSize="13" FontFamily="Segoe UI">
+                        <Run Text="←" Foreground="{StaticResource AccentBrush}"/>
+                        <Run Text=" Back" Foreground="{StaticResource TextSecondary}"/>
+                    </TextBlock>
+                </Button>
+                <TextBlock Text=" / " Foreground="{StaticResource TextMuted}"
+                           VerticalAlignment="Center" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock Text="Snippets" Foreground="{StaticResource TextSecondary}"
+                           VerticalAlignment="Center" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock Text=" / " Foreground="{StaticResource TextMuted}"
+                           VerticalAlignment="Center" FontSize="13" FontFamily="Segoe UI"/>
+                <TextBlock Text="{Binding PageTitle}" Foreground="{StaticResource TextPrimary}"
+                           VerticalAlignment="Center" FontSize="13" FontFamily="Segoe UI"/>
+            </StackPanel>
+
+            <!-- ── Page header ── -->
+            <TextBlock Style="{StaticResource SectionLabel}" Text="// EDITOR" Margin="0,0,0,8"/>
+            <TextBlock Style="{StaticResource PageTitle}" Text="{Binding PageTitle}"/>
+            <TextBlock Style="{StaticResource PageSubtitle}"
+                       Text="Define title, language, description, tags and paste your code below."
+                       Margin="0,6,0,0"/>
+
+            <!-- ── Separator ── -->
+            <Border Height="1" Background="{StaticResource BorderSubtle}" Margin="0,24,0,0"/>
+
+            <!-- ── Two-column layout ── -->
+            <Grid Margin="0,28,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ═══════════════════ LEFT: Form ═══════════════════ -->
+                <StackPanel Grid.Column="0">
+
+                    <!-- TITLE -->
+                    <TextBlock Style="{StaticResource SectionLabel}" Text="// TITLE" Margin="0,0,0,8"/>
+                    <TextBox Style="{StaticResource DefaultInput}"
+                             Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!-- LANGUAGE + TAGS side by side -->
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SectionLabel}" Text="// LANGUAGE" Margin="0,0,0,8"/>
+                            <ComboBox Style="{StaticResource DarkComboBox}" Height="40"
+                                      ItemsSource="{Binding Languages}"
+                                      SelectedItem="{Binding Language}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SectionLabel}" Text="// TAGS" Margin="0,0,0,8"/>
+                            <TextBox Style="{StaticResource DefaultInput}"
+                                     Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Comma-separated: react, hooks, context"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- DESCRIPTION -->
+                    <TextBlock Style="{StaticResource SectionLabel}" Text="// DESCRIPTION" Margin="0,20,0,8"/>
+                    <TextBox Style="{StaticResource DefaultInput}"
+                             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                             Height="72" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top"
+                             Padding="12,10"/>
+
+                    <!-- CODE panel -->
+                    <TextBlock Style="{StaticResource SectionLabel}" Text="// CODE" Margin="0,20,0,8"/>
+                    <Border Style="{StaticResource CardNoPadding}" ClipToBounds="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Header bar -->
+                            <Border Grid.Row="0"
+                                    Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,0,0,1"
+                                    Padding="16,10">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FileName}"
+                                                   FontFamily="Consolas" FontSize="12"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding FileExtension}"
+                                                   FontFamily="Consolas" FontSize="12"
+                                                   Foreground="{StaticResource AccentBrush}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Border HorizontalAlignment="Right"
+                                            Background="{StaticResource AccentMutedBrush}"
+                                            BorderBrush="{StaticResource AccentBrush}"
+                                            BorderThickness="1" CornerRadius="4" Padding="8,3">
+                                        <TextBlock Text="{Binding Language}"
+                                                   FontFamily="Consolas" FontSize="10"
+                                                   Foreground="{StaticResource AccentBrush}"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- Code editor -->
+                            <TextBox Grid.Row="1" Style="{StaticResource CodeInput}"
+                                     Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}"
+                                     Height="300" AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"
+                                     VerticalContentAlignment="Top"/>
+
+                            <!-- Footer bar -->
+                            <Border Grid.Row="2"
+                                    Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,1,0,0"
+                                    Padding="16,8">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}">
+                                        <Run Text="{Binding LineCount, Mode=OneWay}"/>
+                                        <Run Text=" lines"/>
+                                    </TextBlock>
+                                    <Rectangle Width="1" Height="12" Fill="{StaticResource BorderSubtle}"
+                                               Margin="12,0" VerticalAlignment="Center"/>
+                                    <TextBlock FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               Text="{Binding CodeSizeText, Mode=OneWay}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Action bar -->
+                    <WrapPanel Orientation="Horizontal" Margin="0,24,0,0">
+                        <Button Content="Save as Draft" Style="{StaticResource OutlinedButton}"
+                                Margin="0,0,8,0"
+                                Command="{Binding SaveDraftCommand}"/>
+                        <Button Content="Save &amp; Submit for Review" Style="{StaticResource PrimaryButton}"
+                                Command="{Binding SaveAndSubmitCommand}"/>
+                    </WrapPanel>
+
+                    <!-- Error message -->
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="{StaticResource StatusError}"
+                               FontSize="12" FontFamily="Segoe UI"
+                               TextWrapping="Wrap" Margin="0,10,0,0"
+                               Visibility="{Binding HasError,
+                                            Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- ═══════════════════ RIGHT: Live preview ═══════════════════ -->
+                <StackPanel Grid.Column="2">
+
+                    <TextBlock Style="{StaticResource SectionLabel}" Text="// LIVE PREVIEW"
+                               Margin="0,0,0,16"/>
+
+                    <!-- Preview card -->
+                    <Border Style="{StaticResource SnippetCard}" ClipToBounds="True">
+                        <StackPanel>
+
+                            <!-- Card header -->
+                            <Border Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,0,0,1" Padding="14,10">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FileName}"
+                                                   FontFamily="Consolas" FontSize="11"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding FileExtension}"
+                                                   FontFamily="Consolas" FontSize="11"
+                                                   Foreground="{StaticResource AccentBrush}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Border HorizontalAlignment="Right"
+                                            Background="{StaticResource AccentMutedBrush}"
+                                            CornerRadius="4" Padding="6,2">
+                                        <TextBlock Text="{Binding Language}"
+                                                   FontFamily="Consolas" FontSize="9"
+                                                   Foreground="{StaticResource AccentBrush}"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- Code preview -->
+                            <Border Background="{StaticResource CodeBackground}" Padding="14,12">
+                                <TextBox FontFamily="Consolas" FontSize="11"
+                                         Foreground="{StaticResource TextCode}"
+                                         Background="Transparent" BorderThickness="0"
+                                         IsReadOnly="True" MaxHeight="120"
+                                         AcceptsReturn="True" TextWrapping="NoWrap"
+                                         VerticalScrollBarVisibility="Disabled"
+                                         HorizontalScrollBarVisibility="Disabled"
+                                         Text="{Binding Code, Mode=OneWay}"
+                                         Focusable="False"/>
+                            </Border>
+
+                            <!-- Tags -->
+                            <ItemsControl Margin="14,10,14,0"
+                                          ItemsSource="{Binding TagItems}"
+                                          Visibility="{Binding HasTags,
+                                                       Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{StaticResource AccentMutedBrush}"
+                                                CornerRadius="4" Padding="8,4" Margin="0,0,6,6">
+                                            <TextBlock Text="{Binding}"
+                                                       Foreground="{StaticResource AccentBrush}"
+                                                       FontSize="10" FontFamily="Consolas"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Card footer -->
+                            <Border Background="{StaticResource SidebarBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="0,1,0,0"
+                                    Margin="0,10,0,0" Padding="14,10">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Consolas" FontSize="10"
+                                               Foreground="{StaticResource TextSecondary}">
+                                        <Run Text="{Binding LineCount, Mode=OneWay}"/>
+                                        <Run Text=" lines"/>
+                                    </TextBlock>
+                                    <Rectangle Width="1" Height="10" Fill="{StaticResource BorderSubtle}"
+                                               Margin="10,0" VerticalAlignment="Center"/>
+                                    <TextBlock FontFamily="Consolas" FontSize="10"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               Text="{Binding CodeSizeText, Mode=OneWay}"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

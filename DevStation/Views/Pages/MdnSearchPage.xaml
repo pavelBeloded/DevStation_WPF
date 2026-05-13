@@ -1,0 +1,393 @@
+<UserControl x:Class="DevStation.Views.Pages.MdnSearchPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:DevStation.Services.Interfaces"
+             mc:Ignorable="d"
+             Background="{StaticResource AppBackground}">
+
+    <Grid Margin="40,32,40,32">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══════════════════════ LEFT PANEL ═══════════════════════ -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header: title + search box + indicators -->
+            <StackPanel Grid.Row="0">
+                <TextBlock Style="{StaticResource PageTitle}" Text="MDN Search"/>
+                <TextBlock Style="{StaticResource PageSubtitle}"
+                           Text="Live JavaScript &amp; Web API documentation lookup."
+                           Margin="0,4,0,0"/>
+
+                <!-- Search input -->
+                <Grid Margin="0,16,0,0">
+                    <TextBox Style="{StaticResource DefaultInput}"
+                             Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                             Height="44" Padding="40,0,44,0"/>
+                    <!-- Search icon -->
+                    <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                               Foreground="{StaticResource TextMuted}"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Margin="12,0" IsHitTestVisible="False"/>
+                    <!-- Clear button -->
+                    <Button Style="{StaticResource GhostButton}"
+                            HorizontalAlignment="Right" Width="32" Height="32" Padding="0"
+                            Command="{Binding ClearCommand}"
+                            Visibility="{Binding SearchQuery,
+                                         Converter={StaticResource StringToVisibilityConverter}}">
+                        <TextBlock Text="✕" FontSize="12" Foreground="{StaticResource TextSecondary}"/>
+                    </Button>
+                </Grid>
+
+                <!-- Status row -->
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <TextBlock Text="Searching..."
+                               Foreground="{StaticResource TextSecondary}"
+                               FontSize="12" FontFamily="Segoe UI"
+                               VerticalAlignment="Center"
+                               Visibility="{Binding IsLoading,
+                                            Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Background="#1A2A1A" BorderBrush="#3A6A3A" BorderThickness="1"
+                            CornerRadius="4" Padding="8,3" Margin="0,0,0,0"
+                            Visibility="{Binding IsOffline,
+                                         Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="● From cache" FontSize="11" FontFamily="Segoe UI"
+                                   Foreground="{StaticResource StatusReady}"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Results + empty states -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
+                <StackPanel>
+
+                    <!-- Results count header -->
+                    <TextBlock FontSize="11" FontFamily="Segoe UI"
+                               Foreground="{StaticResource TextSecondary}"
+                               Margin="0,0,0,6"
+                               Visibility="{Binding HasResults,
+                                            Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Run Text="RESULTS ("/>
+                        <Run Text="{Binding SearchResults.Count, Mode=OneWay}"/>
+                        <Run Text=")"/>
+                    </TextBlock>
+
+                    <!-- Results list -->
+                    <ItemsControl ItemsSource="{Binding SearchResults}"
+                                  Visibility="{Binding HasResults,
+                                               Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:MdnSearchResult}">
+                                <Border Padding="12,10" CornerRadius="6" Margin="0,2" Cursor="Hand"
+                                        BorderThickness="1">
+                                    <Border.InputBindings>
+                                        <MouseBinding MouseAction="LeftClick"
+                                                      Command="{Binding DataContext.SelectResultCommand,
+                                                                RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                      CommandParameter="{Binding}"/>
+                                    </Border.InputBindings>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background"   Value="{StaticResource CardBackground}"/>
+                                            <Setter Property="BorderBrush"  Value="{StaticResource BorderDefault}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background"  Value="{StaticResource AccentMutedBrush}"/>
+                                                    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource TextSecondary}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Title + category -->
+                                        <Grid Grid.Row="0">
+                                            <TextBlock Text="{Binding Title}"
+                                                       Style="{StaticResource CardTitleSmall}"
+                                                       VerticalAlignment="Center"
+                                                       Margin="0,0,80,0"/>
+                                            <Border HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                    Background="{StaticResource AccentMutedBrush}"
+                                                    CornerRadius="3" Padding="6,2">
+                                                <TextBlock Text="{Binding Category}"
+                                                           Foreground="{StaticResource AccentBrush}"
+                                                           FontSize="10" FontFamily="Segoe UI"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Summary -->
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding Summary}"
+                                                   Style="{StaticResource CardBody}"
+                                                   MaxHeight="36"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,4,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- No results state -->
+                    <StackPanel HorizontalAlignment="Center" Margin="0,32,0,0"
+                                Visibility="{Binding HasNoResults,
+                                             Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="No results found"
+                                   Style="{StaticResource SectionTitle}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Try different keywords or check your connection"
+                                   Style="{StaticResource PageSubtitle}"
+                                   HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Initial / empty query state -->
+                    <StackPanel HorizontalAlignment="Center" Margin="0,48,0,0"
+                                Visibility="{Binding SearchQuery,
+                                             Converter={StaticResource StringToVisibilityInvertedConverter}}">
+                        <TextBlock Text="Search MDN Documentation"
+                                   Style="{StaticResource SectionTitle}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource PageSubtitle}"
+                                   HorizontalAlignment="Center" Margin="0,8,0,0"
+                                   TextAlignment="Center">
+                            <Run Text="Try: "/>
+                            <Run Text="Array.map" Foreground="{StaticResource AccentBrush}"/>
+                            <Run Text=", "/>
+                            <Run Text="Promise" Foreground="{StaticResource AccentBrush}"/>
+                            <Run Text=", "/>
+                            <Run Text="fetch" Foreground="{StaticResource AccentBrush}"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- ═══════════════════════ RIGHT PANEL ═══════════════════════ -->
+        <Border Grid.Column="2" Style="{StaticResource CardNoPadding}" ClipToBounds="True">
+            <Grid>
+
+                <!-- Empty state: no result selected -->
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Visibility="{Binding IsResultSelected,
+                                         Converter={StaticResource BoolToVisibilityInvertedConverter}}">
+                    <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="32"
+                               Foreground="{StaticResource TextMuted}"
+                               HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                    <TextBlock Text="Select a result"
+                               Style="{StaticResource SectionTitle}"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Click on any result to see details"
+                               Style="{StaticResource PageSubtitle}"
+                               HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <!-- Detail view: result selected -->
+                <Grid Visibility="{Binding IsResultSelected,
+                                   Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ── Header ── -->
+                    <Border Grid.Row="0"
+                            Padding="20,14"
+                            BorderBrush="{StaticResource BorderDefault}"
+                            BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Title + badges -->
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedResult.Title}"
+                                           Style="{StaticResource SectionTitle}"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                    <Border Background="{StaticResource AccentMutedBrush}"
+                                            CornerRadius="3" Padding="6,2">
+                                        <TextBlock Text="{Binding SelectedResult.Category}"
+                                                   FontSize="10" FontFamily="Segoe UI"
+                                                   Foreground="{StaticResource AccentBrush}"/>
+                                    </Border>
+                                    <Border Background="{StaticResource StatusReadySubtleBrush}"
+                                            BorderBrush="{StaticResource StatusReadyBorderSubtleBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="3" Padding="6,2" Margin="6,0,0,0"
+                                            Visibility="{Binding SelectedResult.IsFromCache,
+                                                         Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <TextBlock Text="● cached" FontSize="10" FontFamily="Segoe UI"
+                                                   Foreground="{StaticResource StatusReady}"/>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Action buttons -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <Button Content="Copy URL" Style="{StaticResource GhostButton}"
+                                        Command="{Binding CopyUrlCommand}"/>
+                                <Button Content="Open ↗" Style="{StaticResource OutlinedButton}"
+                                        Margin="8,0,0,0"
+                                        Command="{Binding OpenInBrowserCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- ── Loading details ── -->
+                    <Border Grid.Row="1" Padding="20"
+                            Visibility="{Binding IsLoadingDetails,
+                                         Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="Loading details..."
+                                   Style="{StaticResource PageSubtitle}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- ── Detail content ── -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                                  Visibility="{Binding IsLoadingDetails,
+                                               Converter={StaticResource BoolToVisibilityInvertedConverter}}">
+                        <StackPanel Margin="20,16,20,24">
+
+                            <!-- SUMMARY -->
+                            <StackPanel Visibility="{Binding SelectedDetails.Summary,
+                                                     Converter={StaticResource StringToVisibilityConverter}}">
+                                <Grid Margin="0,0,0,8">
+                                    <TextBlock Text="SUMMARY" Style="{StaticResource FieldLabel}"
+                                               VerticalAlignment="Center"/>
+                                    <Button Content="Copy" Style="{StaticResource GhostButton}"
+                                            HorizontalAlignment="Right"
+                                            Command="{Binding CopySummaryCommand}"/>
+                                </Grid>
+                                <TextBlock Text="{Binding SelectedDetails.Summary}"
+                                           Style="{StaticResource CardBody}"
+                                           TextWrapping="Wrap" LineHeight="22"/>
+                            </StackPanel>
+
+                            <!-- SYNTAX -->
+                            <StackPanel Margin="0,20,0,0"
+                                        Visibility="{Binding HasSyntax,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="SYNTAX" Style="{StaticResource FieldLabel}"
+                                           Margin="0,0,0,8"/>
+                                <Border Background="{StaticResource CodeBackground}"
+                                        BorderBrush="{StaticResource BorderDefault}"
+                                        BorderThickness="1" CornerRadius="6">
+                                    <Grid>
+                                        <Rectangle Width="3" HorizontalAlignment="Left"
+                                                   Fill="{StaticResource AccentBrush}"
+                                                   RadiusX="3" RadiusY="3"/>
+                                        <TextBox Margin="16,12,12,12"
+                                                 Style="{StaticResource CodeInput}"
+                                                 IsReadOnly="True"
+                                                 TextWrapping="Wrap"
+                                                 Background="Transparent"
+                                                 BorderThickness="0"
+                                                 Text="{Binding SelectedDetails.Syntax}"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- DESCRIPTION -->
+                            <StackPanel Margin="0,20,0,0"
+                                        Visibility="{Binding HasDescription,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="DESCRIPTION" Style="{StaticResource FieldLabel}"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="{Binding SelectedDetails.Description}"
+                                           Style="{StaticResource CardBody}"
+                                           TextWrapping="Wrap" LineHeight="22"/>
+                            </StackPanel>
+
+                            <!-- EXAMPLES -->
+                            <StackPanel Margin="0,20,0,0"
+                                        Visibility="{Binding HasExamples,
+                                                     Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Grid Margin="0,0,0,8">
+                                    <TextBlock Text="EXAMPLES" Style="{StaticResource FieldLabel}"
+                                               VerticalAlignment="Center"/>
+                                    <Button Content="Copy" Style="{StaticResource GhostButton}"
+                                            HorizontalAlignment="Right"
+                                            Command="{Binding CopyExamplesCommand}"/>
+                                </Grid>
+                                <Border Background="{StaticResource CodeBackground}"
+                                        BorderBrush="{StaticResource BorderDefault}"
+                                        BorderThickness="1" CornerRadius="6">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0"
+                                                Background="{StaticResource SidebarBackground}"
+                                                BorderBrush="{StaticResource BorderSubtle}"
+                                                BorderThickness="0,0,0,1"
+                                                CornerRadius="6,6,0,0"
+                                                Padding="12,8">
+                                            <TextBlock Text="javascript" FontSize="11"
+                                                       Foreground="{StaticResource TextSecondary}"
+                                                       FontFamily="Consolas"/>
+                                        </Border>
+                                        <TextBox Grid.Row="1"
+                                                 Padding="16,12"
+                                                 Style="{StaticResource CodeInput}"
+                                                 IsReadOnly="True"
+                                                 AcceptsReturn="True"
+                                                 TextWrapping="Wrap"
+                                                 MaxHeight="280"
+                                                 Background="Transparent"
+                                                 BorderThickness="0"
+                                                 Text="{Binding SelectedDetails.Examples}"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- MDN URL -->
+                            <Border Margin="0,24,0,0"
+                                    Background="{StaticResource InputBackground}"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="1" CornerRadius="6" Padding="12,10">
+                                <Grid>
+                                    <TextBlock Text="{Binding FullMdnUrl}"
+                                               Foreground="{StaticResource AccentBrush}"
+                                               FontSize="11" FontFamily="Consolas"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,36,0"/>
+                                    <Button Content="↗" Style="{StaticResource GhostButton}"
+                                            HorizontalAlignment="Right"
+                                            Width="28" Height="28" Padding="0"
+                                            Command="{Binding OpenInBrowserCommand}"/>
+                                </Grid>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                </Grid>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

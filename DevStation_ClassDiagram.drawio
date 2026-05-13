@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2339" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- ===== DOMAIN MODELS ===== -->
+
+    <!-- User -->
+    <mxCell id="2" value="User" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="20" y="20" width="230" height="190" as="geometry"/>
+    </mxCell>
+    <mxCell id="3" value="+ Id : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="26" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="4" value="+ Username : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="46" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="5" value="+ Email : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="66" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="6" value="+ PasswordHash : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="86" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="7" value="+ Role : UserRole" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="106" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="8" value="+ DisplayName : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="126" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="9" value="+ CreatedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="146" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="10" value="+ LastLoginAt : DateTime?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="2">
+      <mxGeometry y="166" width="230" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- Snippet -->
+    <mxCell id="11" value="Snippet" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="270" y="20" width="240" height="270" as="geometry"/>
+    </mxCell>
+    <mxCell id="12" value="+ Id : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="26" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="13" value="+ CreatorId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="46" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="14" value="+ Title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="66" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="15" value="+ Code : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="86" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="16" value="+ Language : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="106" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="17" value="+ Description : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="126" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="18" value="+ Tags : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="146" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="19" value="+ ViewCount : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="166" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="20" value="+ Status : SnippetStatus" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="186" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="21" value="+ IsPublic : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="206" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="22" value="+ CreatedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="226" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="23" value="+ UpdatedAt : DateTime?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="11">
+      <mxGeometry y="246" width="240" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- UserSnippet -->
+    <mxCell id="24" value="UserSnippet" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="530" y="20" width="210" height="130" as="geometry"/>
+    </mxCell>
+    <mxCell id="25" value="+ UserId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="24">
+      <mxGeometry y="26" width="210" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="26" value="+ SnippetId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="24">
+      <mxGeometry y="46" width="210" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="27" value="+ FolderId : int?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="24">
+      <mxGeometry y="66" width="210" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="28" value="+ IsFavorite : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="24">
+      <mxGeometry y="86" width="210" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="29" value="+ AddedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="24">
+      <mxGeometry y="106" width="210" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- MdnCache -->
+    <mxCell id="30" value="MdnCache" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="760" y="20" width="220" height="170" as="geometry"/>
+    </mxCell>
+    <mxCell id="31" value="+ Id : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="26" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="32" value="+ SearchTerm : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="46" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="33" value="+ Title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="66" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="34" value="+ Summary : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="86" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="35" value="+ Category : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="106" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="36" value="+ Url : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="126" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="37" value="+ CachedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="30">
+      <mxGeometry y="146" width="220" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- Folder -->
+    <mxCell id="38" value="Folder" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="20" y="240" width="220" height="150" as="geometry"/>
+    </mxCell>
+    <mxCell id="39" value="+ Id : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="26" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="40" value="+ UserId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="46" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="41" value="+ Name : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="66" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="42" value="+ ParentFolderId : int?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="86" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="43" value="+ Color : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="106" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="44" value="+ CreatedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="38">
+      <mxGeometry y="126" width="220" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- SnippetReview -->
+    <mxCell id="45" value="SnippetReview" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="270" y="310" width="230" height="170" as="geometry"/>
+    </mxCell>
+    <mxCell id="46" value="+ Id : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="26" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="47" value="+ SnippetId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="46" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="48" value="+ ReviewerId : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="66" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="49" value="+ Status : ReviewStatus" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="86" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="50" value="+ ReviewComment : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="106" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="51" value="+ CreatedAt : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="126" width="230" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="52" value="+ ReviewedAt : DateTime?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="45">
+      <mxGeometry y="146" width="230" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ===== ENUMS ===== -->
+
+    <!-- UserRole -->
+    <mxCell id="53" value="&lt;&lt;enumeration&gt;&gt;&#xa;UserRole" style="swimlane;fontStyle=1;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="530" y="180" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="54" value="User" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="53">
+      <mxGeometry y="40" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="55" value="Admin" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="53">
+      <mxGeometry y="60" width="160" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- SnippetStatus -->
+    <mxCell id="56" value="&lt;&lt;enumeration&gt;&gt;&#xa;SnippetStatus" style="swimlane;fontStyle=1;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="530" y="280" width="160" height="120" as="geometry"/>
+    </mxCell>
+    <mxCell id="57" value="Draft" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="56">
+      <mxGeometry y="40" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="58" value="PendingReview" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="56">
+      <mxGeometry y="60" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="59" value="Published" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="56">
+      <mxGeometry y="80" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="60" value="Rejected" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="56">
+      <mxGeometry y="100" width="160" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ReviewStatus -->
+    <mxCell id="61" value="&lt;&lt;enumeration&gt;&gt;&#xa;ReviewStatus" style="swimlane;fontStyle=1;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="530" y="420" width="160" height="100" as="geometry"/>
+    </mxCell>
+    <mxCell id="62" value="Pending" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="61">
+      <mxGeometry y="40" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="63" value="Approved" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="61">
+      <mxGeometry y="60" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="64" value="Rejected" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="61">
+      <mxGeometry y="80" width="160" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ===== SERVICE INTERFACES ===== -->
+
+    <!-- IAuthService -->
+    <mxCell id="65" value="&lt;&lt;interface&gt;&gt;&#xa;IAuthService" style="swimlane;fontStyle=3;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="20" y="560" width="320" height="120" as="geometry"/>
+    </mxCell>
+    <mxCell id="66" value="+ LoginAsync(username, password) : Task&lt;User?&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="65">
+      <mxGeometry y="40" width="320" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="67" value="+ RegisterAsync(username, email, password, role) : Task&lt;User&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="65">
+      <mxGeometry y="60" width="320" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="68" value="+ LogoutAsync() : Task" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="65">
+      <mxGeometry y="80" width="320" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="69" value="+ TryRestoreSessionAsync() : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="65">
+      <mxGeometry y="100" width="320" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ICurrentUserService -->
+    <mxCell id="70" value="&lt;&lt;interface&gt;&gt;&#xa;ICurrentUserService" style="swimlane;fontStyle=3;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="360" y="560" width="270" height="120" as="geometry"/>
+    </mxCell>
+    <mxCell id="71" value="+ CurrentUser : User?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="70">
+      <mxGeometry y="40" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="72" value="+ IsAuthenticated : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="70">
+      <mxGeometry y="60" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="73" value="+ IsAdmin : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="70">
+      <mxGeometry y="80" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="74" value="+ SetUser(user : User?) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="70">
+      <mxGeometry y="100" width="270" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ISnippetService -->
+    <mxCell id="75" value="&lt;&lt;interface&gt;&gt;&#xa;ISnippetService" style="swimlane;fontStyle=3;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="650" y="560" width="380" height="180" as="geometry"/>
+    </mxCell>
+    <mxCell id="76" value="+ GetPublicSnippetsAsync(query, lang) : Task&lt;IEnumerable&lt;Snippet&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="40" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="77" value="+ GetUserLibraryAsync(userId, query, lang, filter) : Task&lt;IEnumerable&lt;UserSnippet&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="60" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="78" value="+ GetByIdAsync(id : int) : Task&lt;Snippet?&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="80" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="79" value="+ CreateSnippetAsync(creatorId, title, code, lang, desc, tags) : Task&lt;Snippet&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="100" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="80" value="+ InstallSnippetAsync(userId, snippetId) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="120" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="81" value="+ ToggleFavoriteAsync(userId, snippetId) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="140" width="380" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="82" value="+ ReviewSnippetAsync(snippetId, reviewerId, status, comment) : Task" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="75">
+      <mxGeometry y="160" width="380" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- IMdnSearchService -->
+    <mxCell id="83" value="&lt;&lt;interface&gt;&gt;&#xa;IMdnSearchService" style="swimlane;fontStyle=3;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1050" y="560" width="290" height="100" as="geometry"/>
+    </mxCell>
+    <mxCell id="84" value="+ SearchAsync(query : string) : Task&lt;List&lt;MdnSearchResult&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="83">
+      <mxGeometry y="40" width="290" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="85" value="+ GetDetailsAsync(url : string) : Task&lt;MdnDetails&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="83">
+      <mxGeometry y="60" width="290" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="86" value="+ GetTotalSearchCountAsync() : Task&lt;int&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="83">
+      <mxGeometry y="80" width="290" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- IAccountService -->
+    <mxCell id="87" value="&lt;&lt;interface&gt;&gt;&#xa;IAccountService" style="swimlane;fontStyle=3;align=center;startSize=40;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1360" y="560" width="310" height="160" as="geometry"/>
+    </mxCell>
+    <mxCell id="88" value="+ UpdateUsernameAsync(userId, newUsername) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="40" width="310" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="89" value="+ UpdatePasswordAsync(userId, currentPwd, newPwd) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="60" width="310" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="90" value="+ GetUserStatsAsync(userId : int) : Task&lt;UserStats&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="80" width="310" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="91" value="+ GetAllUsersAsync() : Task&lt;List&lt;User&gt;&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="100" width="310" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="92" value="+ PromoteToAdminAsync(targetId, requestingId) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="120" width="310" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="93" value="+ DemoteToUserAsync(targetId, requestingId) : Task&lt;bool&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="87">
+      <mxGeometry y="140" width="310" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ===== SERVICE IMPLEMENTATIONS ===== -->
+
+    <mxCell id="94" value="AuthService" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="20" y="730" width="180" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="95" value="CurrentUserService" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="360" y="730" width="190" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="96" value="SnippetService" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="650" y="730" width="180" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="97" value="MdnSearchService" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1050" y="730" width="190" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="98" value="AccountService" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1360" y="730" width="180" height="36" as="geometry"/>
+    </mxCell>
+
+    <!-- ===== VIEWMODEL LAYER ===== -->
+
+    <!-- ViewModelBase (abstract) -->
+    <mxCell id="99" value="ViewModelBase" style="swimlane;fontStyle=3;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="20" y="830" width="270" height="86" as="geometry"/>
+    </mxCell>
+    <mxCell id="100" value="# PropertyChanged : event PropertyChangedEventHandler?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="99">
+      <mxGeometry y="26" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="101" value="# SetProperty&lt;T&gt;(ref field, value, propertyName) : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="99">
+      <mxGeometry y="46" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="102" value="# OnPropertyChanged(propertyName) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="99">
+      <mxGeometry y="66" width="270" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- RelayCommand -->
+    <mxCell id="103" value="RelayCommand" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="310" y="830" width="270" height="126" as="geometry"/>
+    </mxCell>
+    <mxCell id="104" value="- _execute : Action&lt;object?&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="103">
+      <mxGeometry y="26" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="105" value="- _canExecute : Func&lt;object?, bool&gt;?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="103">
+      <mxGeometry y="46" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="106" value="+ CanExecute(parameter : object?) : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="103">
+      <mxGeometry y="66" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="107" value="+ Execute(parameter : object?) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="103">
+      <mxGeometry y="86" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="108" value="+ RaiseCanExecuteChanged() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="103">
+      <mxGeometry y="106" width="270" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- RelayCommand<T> -->
+    <mxCell id="109" value="RelayCommand&lt;T&gt;" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="600" y="830" width="270" height="106" as="geometry"/>
+    </mxCell>
+    <mxCell id="110" value="- _execute : Action&lt;T?&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="109">
+      <mxGeometry y="26" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="111" value="- _canExecute : Func&lt;T?, bool&gt;?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="109">
+      <mxGeometry y="46" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="112" value="+ CanExecute(parameter : object?) : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="109">
+      <mxGeometry y="66" width="270" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="113" value="+ Execute(parameter : object?) : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="109">
+      <mxGeometry y="86" width="270" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- MdnSearchResult -->
+    <mxCell id="114" value="MdnSearchResult" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="890" y="830" width="250" height="166" as="geometry"/>
+    </mxCell>
+    <mxCell id="115" value="- _isSelected : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="26" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="116" value="+ IsSelected : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="46" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="117" value="+ Title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="66" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="118" value="+ Url : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="86" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="119" value="+ Summary : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="106" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="120" value="+ Category : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="126" width="250" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="121" value="+ IsFromCache : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="114">
+      <mxGeometry y="146" width="250" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- MdnDetails -->
+    <mxCell id="125" value="MdnDetails" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1160" y="830" width="220" height="186" as="geometry"/>
+    </mxCell>
+    <mxCell id="126" value="+ Title : string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="26" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="127" value="+ Url : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="46" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="128" value="+ Summary : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="66" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="129" value="+ Category : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="86" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="130" value="+ Slug : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="106" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="131" value="+ Syntax : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="126" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="132" value="+ Description : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="146" width="220" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="133" value="+ Examples : string?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="125">
+      <mxGeometry y="166" width="220" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- UserStats -->
+    <mxCell id="134" value="UserStats" style="swimlane;fontStyle=1;align=center;startSize=26;container=1;collapsible=0;expand=0;" vertex="1" parent="1">
+      <mxGeometry x="1400" y="830" width="190" height="106" as="geometry"/>
+    </mxCell>
+    <mxCell id="135" value="+ TotalSnippets : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="134">
+      <mxGeometry y="26" width="190" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="136" value="+ InstalledSnippets : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="134">
+      <mxGeometry y="46" width="190" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="137" value="+ PublishedSnippets : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="134">
+      <mxGeometry y="66" width="190" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="138" value="+ PendingSnippets : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;" vertex="1" parent="134">
+      <mxGeometry y="86" width="190" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ===== CONNECTIONS ===== -->
+
+    <!-- User 1 ------- * Snippet (association, User creates Snippets) -->
+    <mxCell id="140" value="" style="endArrow=none;edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="11" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="141" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="140">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="142" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="140">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- User 1 ------- * UserSnippet (association) -->
+    <mxCell id="143" value="" style="endArrow=none;edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="144" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="143">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="145" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="143">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- User (filled diamond) <>------- * Folder (composition: User owns Folders) -->
+    <mxCell id="146" value="" style="endArrow=none;startArrow=diamond;startFill=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="38" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="147" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="146">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="148" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="146">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- User 1 ------- * SnippetReview (association, User writes reviews) -->
+    <mxCell id="149" value="" style="endArrow=none;edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="45" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="150" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="149">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="151" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="149">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- Snippet 1 ------- * UserSnippet (association) -->
+    <mxCell id="152" value="" style="endArrow=none;edgeStyle=orthogonalEdgeStyle;" edge="1" source="11" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="153" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="152">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="154" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="152">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- Snippet (hollow diamond) <>------- * SnippetReview (aggregation) -->
+    <mxCell id="155" value="" style="endArrow=none;startArrow=diamond;startFill=0;edgeStyle=orthogonalEdgeStyle;" edge="1" source="11" target="45" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="156" value="1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="155">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="157" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="155">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- UserSnippet * ------- 0..1 Folder (optional folder placement) -->
+    <mxCell id="158" value="" style="endArrow=none;edgeStyle=orthogonalEdgeStyle;" edge="1" source="24" target="38" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="159" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="158">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="160" value="0..1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="158">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- Folder (hollow diamond) self-aggregation 0..1 parent / * children -->
+    <mxCell id="161" value="" style="endArrow=none;startArrow=diamond;startFill=0;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=1;entryY=0;" edge="1" source="38" target="38" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="300" y="315"/>
+          <mxPoint x="300" y="253"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="162" value="0..1" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="161">
+      <mxGeometry x="-0.7" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+    <mxCell id="163" value="*" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=bottom;" vertex="1" connectable="0" parent="161">
+      <mxGeometry x="0.7" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- User ..> UserRole (dependency, dashed) -->
+    <mxCell id="164" value="" style="endArrow=open;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="53" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Snippet ..> SnippetStatus (dependency, dashed) -->
+    <mxCell id="165" value="" style="endArrow=open;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="11" target="56" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- SnippetReview ..> ReviewStatus (dependency, dashed) -->
+    <mxCell id="166" value="" style="endArrow=open;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="45" target="61" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- AuthService ..|> IAuthService (realization) -->
+    <mxCell id="167" value="" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="94" target="65" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- CurrentUserService ..|> ICurrentUserService (realization) -->
+    <mxCell id="168" value="" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="95" target="70" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- SnippetService ..|> ISnippetService (realization) -->
+    <mxCell id="169" value="" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="96" target="75" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- MdnSearchService ..|> IMdnSearchService (realization) -->
+    <mxCell id="170" value="" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="97" target="83" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- AccountService ..|> IAccountService (realization) -->
+    <mxCell id="171" value="" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" source="98" target="87" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- MdnSearchResult --|> ViewModelBase (inheritance) -->
+    <mxCell id="172" value="" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;" edge="1" source="114" target="99" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

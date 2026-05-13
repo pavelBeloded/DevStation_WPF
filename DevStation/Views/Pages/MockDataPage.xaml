@@ -1,0 +1,302 @@
+<UserControl x:Class="DevStation.Views.Pages.MockDataPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:DevStation.ViewModels"
+             mc:Ignorable="d"
+             Background="{StaticResource AppBackground}">
+
+    <Grid Margin="40,32">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  LEFT — Configuration                           -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"
+                      Margin="0,0,8,0">
+            <StackPanel>
+
+                <!-- Page header -->
+                <TextBlock Text="Mock Data Generator" Style="{StaticResource PageTitle}"/>
+                <TextBlock Text="Design custom schemas and generate production-ready fake data in seconds."
+                           Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
+
+                <!-- ── Configuration Card ── -->
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+
+                        <!-- Section title -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="Configuration" Style="{StaticResource SectionTitle}"/>
+                        </StackPanel>
+
+                        <!-- ENTITY NAME -->
+                        <TextBlock Text="ENTITY NAME" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Style="{StaticResource DefaultInput}"
+                                 Text="{Binding EntityName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <!-- GENERATION COUNT -->
+                        <Grid Margin="0,16,0,0">
+                            <TextBlock Text="GENERATION COUNT" Style="{StaticResource FieldLabel}"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="13" FontFamily="Segoe UI"
+                                       Foreground="{StaticResource TextAccent}">
+                                <Run Text="{Binding RecordCount, Mode=OneWay}"/>
+                                <Run Text=" records"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="1" FontSize="11" FontFamily="Segoe UI"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <Slider Grid.Column="1" Style="{StaticResource AccentSlider}"
+                                    Minimum="1" Maximum="1000"
+                                    Value="{Binding RecordCount}"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="1000" FontSize="11" FontFamily="Segoe UI"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </Grid>
+
+                        <!-- OUTPUT FORMAT toggle -->
+                        <TextBlock Text="OUTPUT FORMAT" Style="{StaticResource FieldLabel}"
+                                   Margin="0,16,0,6"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- JSON button — активен когда IsJsonFormat=True -->
+                            <Button Grid.Column="0" Content="JSON"
+                                    Command="{Binding SelectJsonCommand}"
+                                    Margin="0,0,4,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource ToggleButtonInactive}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsJsonFormat}" Value="True">
+                                                <Setter Property="Background"       Value="{StaticResource AccentBrush}"/>
+                                                <Setter Property="Foreground"       Value="#0E0E0E"/>
+                                                <Setter Property="BorderThickness"  Value="0"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                            <!-- SQL button — активен когда IsJsonFormat=False -->
+                            <Button Grid.Column="1" Content="SQL"
+                                    Command="{Binding SelectSqlCommand}"
+                                    Margin="4,0,0,0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource ToggleButtonInactive}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsJsonFormat}" Value="False">
+                                                <Setter Property="Background"       Value="{StaticResource AccentBrush}"/>
+                                                <Setter Property="Foreground"       Value="#0E0E0E"/>
+                                                <Setter Property="BorderThickness"  Value="0"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- ── Active Fields Card ── -->
+                <Border Style="{StaticResource Card}" Margin="0,16,0,0">
+                    <StackPanel>
+
+                        <!-- Section title -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="&#xE945;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="Active Fields" Style="{StaticResource SectionTitle}"/>
+                        </StackPanel>
+
+                        <!-- Field rows -->
+                        <ItemsControl ItemsSource="{Binding Fields}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:MockFieldItem}">
+                                    <Border Style="{StaticResource ActiveFieldItem}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="28"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Drag handle -->
+                                            <TextBlock Grid.Column="0" Text="&#xE784;"
+                                                       FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                                       Foreground="{StaticResource TextMuted}"
+                                                       VerticalAlignment="Center"/>
+
+                                            <!-- Name + Type -->
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                                                        Margin="10,0">
+                                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                         Background="Transparent" BorderThickness="0"
+                                                         Foreground="{StaticResource TextPrimary}"
+                                                         FontSize="14" FontWeight="SemiBold"
+                                                         FontFamily="Segoe UI" Padding="0"
+                                                         CaretBrush="{StaticResource AccentBrush}"/>
+                                                <ComboBox Style="{StaticResource DarkComboBox}"
+                                                          ItemsSource="{x:Static vm:MockFieldItem.TypeOptions}"
+                                                          SelectedValuePath="Key"
+                                                          SelectedValue="{Binding TypeKey}"
+                                                          Margin="0,4,0,0"/>
+                                            </StackPanel>
+
+                                            <!-- Delete -->
+                                            <Button Grid.Column="2"
+                                                    Style="{StaticResource GhostButton}"
+                                                    Width="28" Height="28" Padding="0"
+                                                    ToolTip="Remove field"
+                                                    Command="{Binding DataContext.DeleteFieldCommand,
+                                                              RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="&#xE74D;" FontFamily="Segoe MDL2 Assets"
+                                                           FontSize="13"
+                                                           Foreground="{StaticResource TextSecondary}"/>
+                                            </Button>
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- ADD FIELD DEFINITIONS -->
+                        <Grid Margin="0,8,0,0">
+                            <Rectangle Stroke="{StaticResource BorderSubtle}"
+                                       StrokeThickness="1" StrokeDashArray="5,3"
+                                       RadiusX="6" RadiusY="6" Fill="Transparent"/>
+                            <Button Style="{StaticResource GhostButton}"
+                                    Command="{Binding AddFieldCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    Padding="0,10">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="+" FontSize="16" FontFamily="Segoe UI"
+                                               Foreground="{StaticResource TextMuted}"
+                                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBlock Text="ADD FIELD DEFINITIONS"
+                                               FontSize="11" FontFamily="Segoe UI"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextMuted}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- GENERATE button -->
+                <Button Style="{StaticResource PrimaryButton}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,16,0,32"
+                        Command="{Binding GenerateCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE945;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock Text="GENERATE MOCK DATA" FontSize="13" FontFamily="Segoe UI"
+                                   FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  RIGHT — Output panel                           -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <Border Grid.Column="1" Style="{StaticResource CardNoPadding}" Margin="8,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Border Grid.Row="0" Padding="16,12"
+                        BorderBrush="{StaticResource BorderSubtle}"
+                        BorderThickness="0,0,0,1">
+                    <Grid>
+                        <TextBlock Text="{Binding OutputFileName}"
+                                   Style="{StaticResource CardTitleSmall}"
+                                   VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Copy" Style="{StaticResource OutlinedButton}"
+                                    Height="32" Margin="0,0,8,0"
+                                    Command="{Binding CopyCommand}"/>
+                            <Button Content="Download" Style="{StaticResource OutlinedButton}"
+                                    Height="32" Margin="0,0,8,0"
+                                    Command="{Binding DownloadCommand}"/>
+                            <Button Style="{StaticResource PrimaryButton}"
+                                    Height="32"
+                                    Command="{Binding RegenerateCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="12" VerticalAlignment="Center"
+                                               Margin="0,0,6,0"/>
+                                    <TextBlock Text="Regenerate" FontSize="12" FontFamily="Segoe UI"
+                                               FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Code output -->
+                <TextBox Grid.Row="1" Style="{StaticResource CodeInput}"
+                         Text="{Binding OutputText, Mode=OneWay}"
+                         IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"/>
+
+                <!-- Footer -->
+                <Border Grid.Row="2" Padding="16,10"
+                        BorderBrush="{StaticResource BorderSubtle}"
+                        BorderThickness="0,1,0,0">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontSize="12" FontFamily="Segoe UI"
+                                   Foreground="{StaticResource TextSecondary}">
+                            <Run Text="Lines: "/>
+                            <Run Text="{Binding OutputLines, Mode=OneWay}"/>
+                            <Run Text="   Size: "/>
+                            <Run Text="{Binding OutputSize, Mode=OneWay}"/>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding IsReady,
+                                                 Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Ellipse Style="{StaticResource ActiveDot}"/>
+                            <TextBlock Text="Ready to Export" Style="{StaticResource ReadyText}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -157,7 +157,7 @@ public class MockGeneratorViewModel : ViewModelBase
 
         SelectJsonCommand  = new RelayCommand(() => IsJsonFormat = true);
         SelectSqlCommand   = new RelayCommand(() => IsJsonFormat = false);
-        AddFieldCommand    = new RelayCommand(AddField);
+        AddFieldCommand    = new RelayCommand(AddField, () => Fields.Count < MockFieldItem.TypeOptions.Count);
         DeleteFieldCommand = new RelayCommand<MockFieldItem>(f => { if (f is not null) Fields.Remove(f); });
         GenerateCommand    = new RelayCommand(Generate);
         RegenerateCommand  = new RelayCommand(Generate, () => IsReady || Fields.Count > 0);
@@ -169,8 +169,17 @@ public class MockGeneratorViewModel : ViewModelBase
 
     private void AddField()
     {
-        var preset = _presets[Fields.Count % _presets.Length];
-        Fields.Add(new MockFieldItem { Name = preset.Name, TypeKey = preset.TypeKey });
+        if (Fields.Count >= MockFieldItem.TypeOptions.Count) return;
+
+        if (Fields.Count < _presets.Length)
+        {
+            var preset = _presets[Fields.Count];
+            Fields.Add(new MockFieldItem { Name = preset.Name, TypeKey = preset.TypeKey });
+        }
+        else
+        {
+            Fields.Add(new MockFieldItem { Name = $"field_{Fields.Count + 1}", TypeKey = "number" });
+        }
     }
 
     private void Generate()
@@ -204,12 +213,15 @@ public class MockGeneratorViewModel : ViewModelBase
         var cols = Fields.Select(f => $"    {f.Name} {GetSqlType(f.TypeKey)}").ToList();
         sb.AppendLine(string.Join(",\n", cols));
         sb.AppendLine(");");
+        sb.AppendLine("GO");
         sb.AppendLine();
 
-        var colNames = string.Join(", ", Fields.Select(f => f.Name));
+        // IDENTITY columns are populated automatically — exclude them from INSERT
+        var insertFields = Fields.Where(f => f.TypeKey != "id").ToList();
+        var colNames = string.Join(", ", insertFields.Select(f => f.Name));
         for (var i = 1; i <= RecordCount; i++)
         {
-            var vals = string.Join(", ", Fields.Select(f => ToSqlLiteral(GenerateValue(faker, f.TypeKey, i))));
+            var vals = string.Join(", ", insertFields.Select(f => ToSqlLiteral(GenerateValue(faker, f.TypeKey, i))));
             sb.AppendLine($"INSERT INTO {table} ({colNames}) VALUES ({vals});");
         }
 
@@ -240,13 +252,13 @@ public class MockGeneratorViewModel : ViewModelBase
 
     private static string GetSqlType(string typeKey) => typeKey switch
     {
-        "id"      => "INT PRIMARY KEY AUTO_INCREMENT",
-        "uuid"    => "CHAR(36)",
-        "boolean" => "BOOLEAN",
+        "id"      => "INT IDENTITY(1,1) PRIMARY KEY",
+        "uuid"    => "UNIQUEIDENTIFIER",
+        "boolean" => "BIT",
         "price"   => "DECIMAL(10,2)",
         "number"  => "INT",
         "date"    => "DATE",
-        _         => "VARCHAR(255)"
+        _         => "NVARCHAR(255)"
     };
 
     private static string ToSqlLiteral(object val) => val switch

@@ -14,19 +14,25 @@ public partial class SvgConverterPage : UserControl
 
     private ConverterViewModel? VM => DataContext as ConverterViewModel;
 
+    private static bool IsSvgFile(string path) =>
+        path.EndsWith(".svg", StringComparison.OrdinalIgnoreCase);
+
+    private static bool HasSvgFile(DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return false;
+        var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+        return files?.Any(IsSvgFile) == true;
+    }
+
     private void DropZone_DragOver(object sender, DragEventArgs e)
     {
-        e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop)
-            ? DragDropEffects.Copy
-            : DragDropEffects.None;
+        e.Effects = HasSvgFile(e) ? DragDropEffects.Copy : DragDropEffects.None;
         e.Handled = true;
     }
 
     private void DropZone_DragEnter(object sender, DragEventArgs e)
     {
-        e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop)
-            ? DragDropEffects.Copy
-            : DragDropEffects.None;
+        e.Effects = HasSvgFile(e) ? DragDropEffects.Copy : DragDropEffects.None;
         e.Handled = true;
     }
 
@@ -34,12 +40,13 @@ public partial class SvgConverterPage : UserControl
     {
         var dialog = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Select SVG or XML file",
-            Filter = "SVG/XML files (*.svg;*.xml)|*.svg;*.xml|All files (*.*)|*.*",
+            Title = "Select SVG file",
+            Filter = "SVG files (*.svg)|*.svg",
             Multiselect = false
         };
 
         if (dialog.ShowDialog() != true) return;
+        if (!IsSvgFile(dialog.FileName)) return;
 
         try
         {
@@ -59,8 +66,7 @@ public partial class SvgConverterPage : UserControl
 
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
         var file = files.FirstOrDefault(f =>
-            f.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) ||
-            f.EndsWith(".xml", StringComparison.OrdinalIgnoreCase));
+            f.EndsWith(".svg", StringComparison.OrdinalIgnoreCase));
 
         if (file is null) return;
 

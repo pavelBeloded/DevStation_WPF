@@ -68,17 +68,13 @@
             </ScrollViewer>
         </Border>
 
-        <!-- ══════════════════════════════════ -->
-        <!-- RIGHT: Content                     -->
-        <!-- ══════════════════════════════════ -->
+     
         <ScrollViewer Grid.Column="1"
                       x:Name="MainScrollViewer"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="48,32,48,48">
 
-                <!-- ════════════════════════════ -->
-                <!-- GETTING STARTED              -->
-                <!-- ════════════════════════════ -->
+           
                 <StackPanel x:Name="sectionGettingStarted">
 
                     <TextBlock Text="Getting Started" Style="{StaticResource PageTitle}"/>
@@ -95,7 +91,6 @@
                     <TextBlock Text="Quick Start" Style="{StaticResource SectionTitle}"
                                Margin="0,0,0,16"/>
 
-                    <!-- Step 1 -->
                     <Border Style="{StaticResource Card}" Margin="0,0,0,8">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -117,7 +112,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- Step 2 -->
                     <Border Style="{StaticResource Card}" Margin="0,0,0,8">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -139,7 +133,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- Step 3 -->
                     <Border Style="{StaticResource Card}" Margin="0,0,0,32">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -165,9 +158,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,0,0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- SVG CONVERTER               -->
-                <!-- ════════════════════════════ -->
+                
                 <StackPanel x:Name="sectionSvgConverter">
 
                     <TextBlock Text="SVG Converter" Style="{StaticResource PageTitle}"/>
@@ -230,9 +221,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- IMAGE OPTIMIZER             -->
-                <!-- ════════════════════════════ -->
+             
                 <StackPanel x:Name="sectionImageOptimizer">
 
                     <TextBlock Text="Image Optimizer" Style="{StaticResource PageTitle}"/>
@@ -278,9 +267,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- MDN SEARCH                  -->
-                <!-- ════════════════════════════ -->
+            
                 <StackPanel x:Name="sectionMdnSearch">
 
                     <TextBlock Text="MDN Search" Style="{StaticResource PageTitle}"/>
@@ -356,9 +343,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- MOCK GENERATOR              -->
-                <!-- ════════════════════════════ -->
+   
                 <StackPanel x:Name="sectionMockGenerator">
 
                     <TextBlock Text="Mock Data Generator" Style="{StaticResource PageTitle}"/>
@@ -409,7 +394,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- PERSON_NAME -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -429,7 +413,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- INTERNET_EMAIL -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -449,7 +432,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- NUMBER -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -469,7 +451,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- BOOLEAN -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -489,7 +470,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- DATE -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -509,7 +489,6 @@
                             </Border>
                             <Rectangle Style="{StaticResource Divider}"/>
 
-                            <!-- PHONE -->
                             <Border Padding="16,12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -535,9 +514,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- SNIPPETS                    -->
-                <!-- ════════════════════════════ -->
+           
                 <StackPanel x:Name="sectionSnippets">
 
                     <TextBlock Text="Snippet Library" Style="{StaticResource PageTitle}"/>
@@ -618,9 +595,7 @@
 
                 <Rectangle Style="{StaticResource Divider}" Margin="0,32"/>
 
-                <!-- ════════════════════════════ -->
-                <!-- FAQ                         -->
-                <!-- ════════════════════════════ -->
+    
                 <StackPanel x:Name="sectionFaq">
 
                     <TextBlock Text="FAQ" Style="{StaticResource PageTitle}"/>

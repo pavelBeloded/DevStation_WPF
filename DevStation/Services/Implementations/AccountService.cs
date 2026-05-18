@@ -88,6 +88,10 @@ public class AccountService : IAccountService
         var target = await _context.Users.FindAsync(targetUserId);
         if (target == null) return false;
 
+        // Первый зарегистрированный пользователь — основатель системы, его нельзя разжаловать
+        var originalAdminId = await _context.Users.MinAsync(u => u.Id);
+        if (targetUserId == originalAdminId) return false;
+
         target.Role = UserRole.User;
         await _context.SaveChangesAsync();
         return true;

@@ -10,13 +10,10 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="40,32,40,32">
 
-            <!-- ── Заголовок ── -->
             <TextBlock Text="Image Optimizer" Style="{StaticResource PageTitle}"/>
             <TextBlock Text="Lightning-fast compression and format conversion for your web assets."
                        Style="{StaticResource PageSubtitle}"/>
 
-            <!-- ── Drop Zone ── -->
-            <!-- Пунктирная граница через Rectangle overlay (WPF не поддерживает напрямую) -->
             <Grid MinHeight="140" Margin="0,16,0,0"
                   Cursor="Hand"
                   AllowDrop="True"
@@ -25,14 +22,12 @@
                   DragEnter="DropZone_DragEnter"
                   DragOver="DropZone_DragOver">
 
-                <!-- Фон + пунктирная рамка -->
                 <Rectangle Fill="{StaticResource DropZoneBackground}"
                            Stroke="{StaticResource AccentBrush}"
                            StrokeThickness="1.5"
                            StrokeDashArray="6,3"
                            RadiusX="8" RadiusY="8"/>
 
-                <!-- Центрированный контент -->
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                             Margin="0,24">
                     <TextBlock Text="&#xE898;" FontFamily="Segoe MDL2 Assets" FontSize="32"
@@ -49,7 +44,6 @@
                 </StackPanel>
             </Grid>
 
-            <!-- ── Optimization Queue header ── -->
             <Grid Margin="0,24,0,0">
                 <TextBlock Text="OPTIMIZATION QUEUE" Style="{StaticResource TableHeader}"
                            VerticalAlignment="Center"/>
@@ -62,11 +56,9 @@
                 </StackPanel>
             </Grid>
 
-            <!-- ── Table ── -->
             <Border Style="{StaticResource CardNoPadding}" Margin="0,12,0,0">
                 <StackPanel>
 
-                    <!-- Table header row -->
                     <Border Padding="16,0"
                             BorderBrush="{StaticResource BorderSubtle}"
                             BorderThickness="0,0,0,1">
@@ -86,7 +78,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- Data rows -->
                     <ItemsControl ItemsSource="{Binding Files}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type vm:ImageFileItem}">
@@ -129,15 +120,12 @@
                                             </StackPanel>
                                         </StackPanel>
 
-                                        <!-- ORIGINAL SIZE -->
                                         <TextBlock Grid.Column="1" Text="{Binding OriginalSizeText}"
                                                    FontSize="13" FontFamily="Segoe UI"
                                                    Foreground="{StaticResource TextSecondary}"
                                                    VerticalAlignment="Center"/>
 
-                                        <!-- OPTIMIZED SIZE — три варианта по статусу -->
                                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                                            <!-- Completed: размер + экономия -->
                                             <StackPanel Orientation="Horizontal"
                                                         Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
                                                 <TextBlock Text="{Binding OptimizedSizeText}"
@@ -149,44 +137,35 @@
                                                            Foreground="{StaticResource TextSecondary}"
                                                            Margin="6,0,0,0" VerticalAlignment="Center"/>
                                             </StackPanel>
-                                            <!-- Optimizing: рассчитываем -->
                                             <TextBlock Text="(calculating)"
                                                        FontSize="13" FontFamily="Segoe UI"
                                                        Foreground="{StaticResource TextSecondary}"
                                                        FontStyle="Italic"
                                                        Visibility="{Binding IsOptimizing, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <!-- Queued: тире -->
                                             <TextBlock Text="—"
                                                        FontSize="13" FontFamily="Segoe UI"
                                                        Foreground="{StaticResource TextSecondary}"
                                                        Visibility="{Binding IsQueued, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         </StackPanel>
 
-                                        <!-- STATUS: текст + прогресс-бар -->
                                         <StackPanel Grid.Column="3" VerticalAlignment="Center"
                                                     Margin="0,0,16,0">
-                                            <!-- COMPLETED -->
                                             <TextBlock Text="COMPLETED"
                                                        Style="{StaticResource StatusCompleted}"
                                                        Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <!-- OPTIMIZING -->
                                             <TextBlock Text="OPTIMIZING"
                                                        Style="{StaticResource StatusCompleted}"
                                                        Visibility="{Binding IsOptimizing, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <!-- QUEUED -->
                                             <TextBlock Text="QUEUED"
                                                        Style="{StaticResource StatusQueuedStyle}"
                                                        Visibility="{Binding IsQueued, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <!-- Прогресс-бар -->
                                             <ProgressBar Style="{StaticResource OptimizationProgress}"
                                                          Value="{Binding Progress}"
                                                          Margin="0,5,0,0"/>
                                         </StackPanel>
 
-                                        <!-- ACTIONS -->
                                         <StackPanel Grid.Column="4" Orientation="Horizontal"
                                                     VerticalAlignment="Center">
-                                            <!-- Download (completed) -->
                                             <Button Style="{StaticResource GhostButton}"
                                                     Width="32" Height="32" Padding="0"
                                                     ToolTip="Download"
@@ -197,7 +176,6 @@
                                                 <TextBlock Text="&#xE896;" FontFamily="Segoe MDL2 Assets"
                                                            FontSize="15" Foreground="{StaticResource TextSecondary}"/>
                                             </Button>
-                                            <!-- Cancel (optimizing) -->
                                             <Button Style="{StaticResource GhostButton}"
                                                     Width="32" Height="32" Padding="0"
                                                     ToolTip="Cancel"
@@ -208,7 +186,6 @@
                                                 <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets"
                                                            FontSize="13" Foreground="{StaticResource TextSecondary}"/>
                                             </Button>
-                                            <!-- Delete (queued) -->
                                             <Button Style="{StaticResource GhostButton}"
                                                     Width="32" Height="32" Padding="0"
                                                     ToolTip="Remove"

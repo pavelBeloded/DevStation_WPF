@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Data.Models;
 using DevStation.Services.Interfaces;
 using DevStation.ViewModels.Base;
@@ -31,6 +32,7 @@ public class MainWindowViewModel : ViewModelBase
     private readonly IAccountService     _accountService;
     private readonly Func<LoginWindow>   _loginWindowFactory;
 
+    private readonly AppSettings                        _settings;
     private readonly Dictionary<string, ViewModelBase> _pageCache = [];
     private ViewModelBase _currentPage;
     private string        _currentPageKey = "Home";
@@ -123,7 +125,8 @@ public class MainWindowViewModel : ViewModelBase
         ISnippetService     snippetService,
         IMdnSearchService   mdnSearchService,
         IAccountService     accountService,
-        Func<LoginWindow>   loginWindowFactory)
+        Func<LoginWindow>   loginWindowFactory,
+        AppSettings         settings)
     {
         _currentUserService = currentUserService;
         _authService        = authService;
@@ -131,6 +134,7 @@ public class MainWindowViewModel : ViewModelBase
         _mdnSearchService   = mdnSearchService;
         _accountService     = accountService;
         _loginWindowFactory = loginWindowFactory;
+        _settings           = settings;
 
         _currentPage = GetOrCreatePage("Home");
 
@@ -246,15 +250,15 @@ public class MainWindowViewModel : ViewModelBase
 
         var page = key switch
         {
-            "Home"           => (ViewModelBase)new HomeViewModel(_snippetService, _mdnSearchService, _currentUserService, NavigateTo, NavigateToVm),
+            "Home"           => (ViewModelBase)new HomeViewModel(_snippetService, _mdnSearchService, _currentUserService, NavigateTo, NavigateToVm, _settings),
             "Converter"      => new ConverterViewModel(),
             "MdnSearch"      => new MdnSearchViewModel(_mdnSearchService),
-            "ImageOptimizer" => new ImageOptimizerViewModel(),
+            "ImageOptimizer" => new ImageOptimizerViewModel(_settings),
             "MockGenerator"  => new MockGeneratorViewModel(),
-            "Snippets"       => new SnippetsViewModel(_snippetService, _currentUserService, NavigateToVm),
+            "Snippets"       => new SnippetsViewModel(_snippetService, _currentUserService, NavigateToVm, _settings),
             "Account"        => new AccountViewModel(_accountService, _currentUserService),
             "Documentation"  => new DocumentationViewModel(),
-            _                => new HomeViewModel(_snippetService, _mdnSearchService, _currentUserService, NavigateTo, NavigateToVm)
+            _                => new HomeViewModel(_snippetService, _mdnSearchService, _currentUserService, NavigateTo, NavigateToVm, _settings)
         };
 
         _pageCache[key] = page;
@@ -315,13 +319,13 @@ public class MainWindowViewModel : ViewModelBase
         try
         {
             IsMdnLoading = true;
-            await Task.Delay(400, token);
+            await Task.Delay(_settings.DebounceDelayMs, token);
             if (token.IsCancellationRequested) return;
 
             var results = await _mdnSearchService.SearchAsync(query);
             if (token.IsCancellationRequested) return;
 
-            MdnResults = new ObservableCollection<MdnSearchResult>(results.Take(5));
+            MdnResults = new ObservableCollection<MdnSearchResult>(results.Take(_settings.MdnSearchLimit));
         }
         catch (TaskCanceledException) { }
         catch { MdnResults = []; }

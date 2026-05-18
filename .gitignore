@@ -13,6 +13,10 @@ output/
 
 # Claude Code
 .claude/
+*_PROMPT.md
+DEVSTATION_*.md
+SNIPPETS.md
+ROLES_PROMPT.md
 
 # OS
 Thumbs.db

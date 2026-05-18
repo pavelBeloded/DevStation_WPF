@@ -23,7 +23,6 @@ public partial class LoginWindow : Window
         };
     }
 
-    // Clear all password boxes when switching between login / register
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(ViewModels.LoginViewModel.IsLoginMode))

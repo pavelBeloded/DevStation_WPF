@@ -1,4 +1,5 @@
-﻿using DevStation.Data.DbContext;
+﻿using DevStation.Configuration;
+using DevStation.Data.DbContext;
 using DevStation.Services.Implementations;
 using DevStation.Services.Interfaces;
 using DevStation.ViewModels;
@@ -26,18 +27,23 @@ public partial class App : Application
 
         var services = new ServiceCollection();
 
+        var appSettings = config.GetSection("AppSettings").Get<AppSettings>() ?? new AppSettings();
+        services.AddSingleton(appSettings);
+
         services.AddDbContext<DevStationDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
         services.AddHttpClient("MDN", client =>
         {
             client.DefaultRequestHeaders.Add("User-Agent", "DevStation/1.0");
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = TimeSpan.FromSeconds(appSettings.HttpTimeoutSeconds);
         });
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<ISnippetService, SnippetService>();
+        services.AddScoped<SnippetService>();
+        services.AddScoped<ISnippetService>(sp =>
+            new LoggingSnippetService(sp.GetRequiredService<SnippetService>()));
         services.AddScoped<IMdnSearchService, MdnSearchService>();
         services.AddScoped<IAccountService, AccountService>();
 
@@ -48,7 +54,8 @@ public partial class App : Application
             sp.GetRequiredService<ISnippetService>(),
             sp.GetRequiredService<IMdnSearchService>(),
             sp.GetRequiredService<IAccountService>(),
-            sp.GetRequiredService<Func<LoginWindow>>()));
+            sp.GetRequiredService<Func<LoginWindow>>(),
+            sp.GetRequiredService<AppSettings>()));
 
         services.AddTransient<LoginWindow>(sp =>
         {
@@ -64,7 +71,6 @@ public partial class App : Application
             return window;
         });
 
-        // Register factories for circular-safe navigation
         services.AddTransient<Func<LoginWindow>>(sp => () => sp.GetRequiredService<LoginWindow>());
         services.AddTransient<Func<MainWindow>>(sp => () => sp.GetRequiredService<MainWindow>());
 
@@ -72,7 +78,6 @@ public partial class App : Application
 
         await EnsureDatabaseAsync();
 
-        // Пробуем восстановить сессию — если успешно, открываем главное окно без логина
         var sessionRestored = false;
         using (var scope = _serviceProvider.CreateScope())
         {

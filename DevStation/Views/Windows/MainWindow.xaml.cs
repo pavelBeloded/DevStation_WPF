@@ -57,7 +57,6 @@ public partial class MainWindow : Window
 
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
-        // Ограничиваем максимальный размер рабочей областью ТЕКУЩЕГО монитора (физические пиксели)
         if (msg == WM_GETMINMAXINFO)
         {
             var mmi     = Marshal.PtrToStructure<MINMAXINFO>(lParam);
@@ -66,14 +65,12 @@ public partial class MainWindow : Window
             {
                 var info = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
                 GetMonitorInfo(monitor, ref info);
-                // ptMaxPosition — относительно левого верхнего угла монитора (не всей раскладки)
                 int w = info.rcWork.Right  - info.rcWork.Left;
                 int h = info.rcWork.Bottom - info.rcWork.Top;
                 mmi.ptMaxPosition.x  = info.rcWork.Left - info.rcMonitor.Left;
                 mmi.ptMaxPosition.y  = info.rcWork.Top  - info.rcMonitor.Top;
                 mmi.ptMaxSize.x      = w;
                 mmi.ptMaxSize.y      = h;
-                // Minimum resize size — cannot exceed the work area size
                 mmi.ptMinTrackSize.x = Math.Min(800, w);
                 mmi.ptMinTrackSize.y = Math.Min(500, h);
             }
@@ -82,7 +79,6 @@ public partial class MainWindow : Window
             return IntPtr.Zero;
         }
 
-        // Подавляем системное меню, вызываемое Alt+Space
         if (msg == WM_SYSCOMMAND && (wParam.ToInt32() & 0xFFF0) == SC_KEYMENU)
         {
             handled = true;
@@ -119,8 +115,8 @@ public partial class MainWindow : Window
         base.OnStateChanged(e);
         if (MaxRestoreIcon == null) return;
         MaxRestoreIcon.Text = WindowState == WindowState.Maximized
-            ? ""   // Restore (восстановить)
-            : "";  // Maximize (развернуть)
+            ? ""   
+            : "";  
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)

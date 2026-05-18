@@ -56,7 +56,6 @@ public partial class SvgConverterPage : UserControl
         }
         catch
         {
-            // файл недоступен — игнорируем
         }
     }
 
@@ -78,7 +77,6 @@ public partial class SvgConverterPage : UserControl
         }
         catch
         {
-            // Файл недоступен — просто игнорируем
         }
     }
 }

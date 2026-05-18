@@ -9,7 +9,7 @@ namespace DevStation.Services.Implementations;
 
 public static class ImageOptimizerService
 {
-    public static async Task<byte[]> OptimizeAsync(string filePath, IProgress<int>? progress = null)
+    public static async Task<byte[]> OptimizeAsync(string filePath, int jpegQuality = 82, int webpQuality = 85, IProgress<int>? progress = null)
     {
         progress?.Report(5);
         var ext = Path.GetExtension(filePath).ToLowerInvariant();
@@ -17,9 +17,9 @@ public static class ImageOptimizerService
         if (ext == ".svg")
             return await OptimizeSvgAsync(filePath, progress);
         if (ext == ".jpg" || ext == ".jpeg")
-            return await OptimizeJpegAsync(filePath, progress);
+            return await OptimizeJpegAsync(filePath, jpegQuality, progress);
         if (ext == ".webp")
-            return await OptimizeWebpAsync(filePath, progress);
+            return await OptimizeWebpAsync(filePath, webpQuality, progress);
 
         return await OptimizePngAsync(filePath, progress);
     }
@@ -32,7 +32,6 @@ public static class ImageOptimizerService
             using var image = Image.Load(path);
             progress?.Report(55);
             using var ms = new MemoryStream();
-            // Только lossless-сжатие без метаданных — никакой квантизации
             image.Save(ms, new PngEncoder
             {
                 CompressionLevel = PngCompressionLevel.BestCompression,
@@ -44,7 +43,7 @@ public static class ImageOptimizerService
         });
     }
 
-    private static async Task<byte[]> OptimizeJpegAsync(string path, IProgress<int>? progress)
+    private static async Task<byte[]> OptimizeJpegAsync(string path, int quality, IProgress<int>? progress)
     {
         return await Task.Run(() =>
         {
@@ -54,15 +53,15 @@ public static class ImageOptimizerService
             using var ms = new MemoryStream();
             image.Save(ms, new JpegEncoder
             {
-                Quality      = 82,   // безопасное значение без видимых артефактов
-                SkipMetadata = true  // EXIF смартфона весит 50-150 KB
+                Quality      = quality,
+                SkipMetadata = true
             });
             progress?.Report(90);
             return ms.ToArray();
         });
     }
 
-    private static async Task<byte[]> OptimizeWebpAsync(string path, IProgress<int>? progress)
+    private static async Task<byte[]> OptimizeWebpAsync(string path, int quality, IProgress<int>? progress)
     {
         return await Task.Run(() =>
         {
@@ -72,7 +71,7 @@ public static class ImageOptimizerService
             using var ms = new MemoryStream();
             image.Save(ms, new WebpEncoder
             {
-                Quality      = 85,
+                Quality      = quality,
                 FileFormat   = WebpFileFormatType.Lossy,
                 SkipMetadata = true
             });

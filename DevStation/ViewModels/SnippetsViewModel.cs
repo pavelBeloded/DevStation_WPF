@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Data.Models;
 using DevStation.Services.Interfaces;
 using DevStation.Utils;
@@ -130,8 +131,8 @@ public class SnippetsViewModel : ViewModelBase
 
     public string PendingCount => PendingReviews.Count.ToString("D2");
 
-    public List<string> Languages      { get; } = ["All", "JavaScript", "TypeScript", "CSS", "HTML", "Python", "SQL"];
-    public List<string> FilterOptions  { get; } = ["All", "Global", "Local", "Pending", "Published"];
+    public List<string> Languages     { get; }
+    public List<string> FilterOptions { get; } = ["All", "Global", "Local", "Pending", "Published"];
 
     public RelayCommand              ShowGlobalTabCommand      { get; }
     public RelayCommand              ShowMyLibraryTabCommand   { get; }
@@ -146,14 +147,19 @@ public class SnippetsViewModel : ViewModelBase
     public RelayCommand<Snippet>     ApproveCommand            { get; }
     public RelayCommand<Snippet>     RejectCommand             { get; }
 
+    private readonly AppSettings _settings;
+
     public SnippetsViewModel(
         ISnippetService       snippetService,
         ICurrentUserService   currentUser,
-        Action<ViewModelBase> navigateTo)
+        Action<ViewModelBase> navigateTo,
+        AppSettings           settings)
     {
         _snippetService = snippetService;
         _currentUser    = currentUser;
         _navigateTo     = navigateTo;
+        _settings       = settings;
+        Languages       = ["All", .. settings.Languages];
 
         ShowGlobalTabCommand    = new RelayCommand(() => IsGlobalTab = true);
         ShowMyLibraryTabCommand = new RelayCommand(() => IsGlobalTab = false);
@@ -200,7 +206,7 @@ public class SnippetsViewModel : ViewModelBase
             var detailVm = new SnippetDetailViewModel(
                 fresh, isInstalled: false, isFavorite: false,
                 _snippetService, _currentUser,
-                () => { _ = LoadDataAsync(); _navigateTo(this); }, _navigateTo);
+                () => { _ = LoadDataAsync(); _navigateTo(this); }, _navigateTo, _settings);
             _navigateTo(detailVm);
         });
 
@@ -211,7 +217,7 @@ public class SnippetsViewModel : ViewModelBase
             var editVm = new CreateSnippetViewModel(
                 fresh, _snippetService, _currentUser,
                 () => { _ = LoadDataAsync(); _navigateTo(this); },
-                _navigateTo);
+                _navigateTo, _settings);
             _navigateTo(editVm);
         });
 
@@ -284,7 +290,7 @@ public class SnippetsViewModel : ViewModelBase
 
         var detailVm = new SnippetDetailViewModel(
             fresh, isInstalled, isFavorite, _snippetService, _currentUser,
-            () => { _ = LoadDataAsync(); _navigateTo(this); }, _navigateTo);
+            () => { _ = LoadDataAsync(); _navigateTo(this); }, _navigateTo, _settings);
 
         _navigateTo(detailVm);
     }
@@ -294,7 +300,7 @@ public class SnippetsViewModel : ViewModelBase
         var createVm = new CreateSnippetViewModel(
             null, _snippetService, _currentUser,
             () => { _ = LoadDataAsync(); _navigateTo(this); },
-            _navigateTo);
+            _navigateTo, _settings);
         _navigateTo(createVm);
     }
 }

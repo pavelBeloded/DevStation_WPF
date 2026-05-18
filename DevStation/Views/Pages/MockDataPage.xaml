@@ -13,23 +13,17 @@
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ═══════════════════════════════════════════════ -->
-        <!--  LEFT — Configuration                           -->
-        <!-- ═══════════════════════════════════════════════ -->
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"
                       Margin="0,0,8,0">
             <StackPanel>
 
-                <!-- Page header -->
                 <TextBlock Text="Mock Data Generator" Style="{StaticResource PageTitle}"/>
                 <TextBlock Text="Design custom schemas and generate production-ready fake data in seconds."
                            Style="{StaticResource PageSubtitle}" Margin="0,4,0,24"/>
 
-                <!-- ── Configuration Card ── -->
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
 
-                        <!-- Section title -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                             <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14"
                                        Foreground="{StaticResource AccentBrush}"
@@ -37,12 +31,10 @@
                             <TextBlock Text="Configuration" Style="{StaticResource SectionTitle}"/>
                         </StackPanel>
 
-                        <!-- ENTITY NAME -->
                         <TextBlock Text="ENTITY NAME" Style="{StaticResource FieldLabel}"/>
                         <TextBox Style="{StaticResource DefaultInput}"
                                  Text="{Binding EntityName, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <!-- GENERATION COUNT -->
                         <Grid Margin="0,16,0,0">
                             <TextBlock Text="GENERATION COUNT" Style="{StaticResource FieldLabel}"
                                        VerticalAlignment="Center"/>
@@ -80,7 +72,6 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- JSON button — активен когда IsJsonFormat=True -->
                             <Button Grid.Column="0" Content="JSON"
                                     Command="{Binding SelectJsonCommand}"
                                     Margin="0,0,4,0">
@@ -97,7 +88,6 @@
                                 </Button.Style>
                             </Button>
 
-                            <!-- SQL button — активен когда IsJsonFormat=False -->
                             <Button Grid.Column="1" Content="SQL"
                                     Command="{Binding SelectSqlCommand}"
                                     Margin="4,0,0,0">
@@ -118,11 +108,9 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ── Active Fields Card ── -->
                 <Border Style="{StaticResource Card}" Margin="0,16,0,0">
                     <StackPanel>
 
-                        <!-- Section title -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                             <TextBlock Text="&#xE945;" FontFamily="Segoe MDL2 Assets" FontSize="14"
                                        Foreground="{StaticResource AccentBrush}"
@@ -130,7 +118,6 @@
                             <TextBlock Text="Active Fields" Style="{StaticResource SectionTitle}"/>
                         </StackPanel>
 
-                        <!-- Field rows -->
                         <ItemsControl ItemsSource="{Binding Fields}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type vm:MockFieldItem}">
@@ -141,14 +128,11 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="28"/>
                                             </Grid.ColumnDefinitions>
-
-                                            <!-- Drag handle -->
                                             <TextBlock Grid.Column="0" Text="&#xE784;"
                                                        FontFamily="Segoe MDL2 Assets" FontSize="12"
                                                        Foreground="{StaticResource TextMuted}"
                                                        VerticalAlignment="Center"/>
 
-                                            <!-- Name + Type -->
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                                         Margin="10,0">
                                                 <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
@@ -164,7 +148,6 @@
                                                           Margin="0,4,0,0"/>
                                             </StackPanel>
 
-                                            <!-- Delete -->
                                             <Button Grid.Column="2"
                                                     Style="{StaticResource GhostButton}"
                                                     Width="28" Height="28" Padding="0"
@@ -183,7 +166,6 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
 
-                        <!-- ADD FIELD DEFINITIONS -->
                         <Grid Margin="0,8,0,0">
                             <Rectangle Stroke="{StaticResource BorderSubtle}"
                                        StrokeThickness="1" StrokeDashArray="5,3"
@@ -208,7 +190,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- GENERATE button -->
                 <Button Style="{StaticResource PrimaryButton}"
                         HorizontalAlignment="Stretch"
                         Margin="0,16,0,32"
@@ -224,9 +205,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ═══════════════════════════════════════════════ -->
-        <!--  RIGHT — Output panel                           -->
-        <!-- ═══════════════════════════════════════════════ -->
         <Border Grid.Column="1" Style="{StaticResource CardNoPadding}" Margin="8,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -235,7 +213,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header -->
                 <Border Grid.Row="0" Padding="16,12"
                         BorderBrush="{StaticResource BorderSubtle}"
                         BorderThickness="0,0,0,1">
@@ -265,14 +242,12 @@
                     </Grid>
                 </Border>
 
-                <!-- Code output -->
                 <TextBox Grid.Row="1" Style="{StaticResource CodeInput}"
                          Text="{Binding OutputText, Mode=OneWay}"
                          IsReadOnly="True"
                          VerticalScrollBarVisibility="Auto"
                          HorizontalScrollBarVisibility="Auto"/>
 
-                <!-- Footer -->
                 <Border Grid.Row="2" Padding="16,10"
                         BorderBrush="{StaticResource BorderSubtle}"
                         BorderThickness="0,1,0,0">

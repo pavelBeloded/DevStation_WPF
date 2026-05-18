@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="DevStation — Auth"
+        Icon="pack://application:,,,/Resources/app.ico"
         Width="520"
         SizeToContent="Height"
         MinHeight="480"
@@ -27,9 +28,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ═══════════════════════════════════════ -->
-        <!-- Custom Title Bar                        -->
-        <!-- ═══════════════════════════════════════ -->
         <Border Grid.Row="0" Style="{StaticResource TitleBar}"
                 MouseDown="TitleBar_MouseDown">
             <Grid>
@@ -38,13 +36,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- App label in title bar -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal"
                             VerticalAlignment="Center" Margin="14,0">
                     <TextBlock Text="DevStation" Style="{StaticResource AuthCaption}"/>
                 </StackPanel>
 
-                <!-- Window controls -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Content="─"
                             Style="{StaticResource WindowMinimizeButton}"
@@ -56,13 +52,9 @@
             </Grid>
         </Border>
 
-        <!-- ═══════════════════════════════════════ -->
-        <!-- Main Content                            -->
-        <!-- ═══════════════════════════════════════ -->
         <StackPanel Grid.Row="1" Width="400" HorizontalAlignment="Center"
                     Margin="0,32,0,40">
 
-            <!-- ── Logo ── -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                         Margin="0,0,0,16">
                 <Border Style="{StaticResource LogoIconLarge}">
@@ -71,25 +63,19 @@
                 <TextBlock Text="DEVSTATION" Style="{StaticResource TerminalHeading}"/>
             </StackPanel>
 
-            <!-- ── Subtitle ── -->
             <TextBlock Text="SYSTEM AUTHENTITICATION REQUIRED"
                        Style="{StaticResource AuthCaption}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,32"/>
 
-            <!-- ═══════════════════════════════════════ -->
-            <!-- LOGIN FORM                              -->
-            <!-- ═══════════════════════════════════════ -->
             <StackPanel Visibility="{Binding IsLoginMode,
                         Converter={StaticResource BoolToVisibilityConverter}}">
 
-                <!-- IDENTIFIER / USERNAME -->
                 <TextBlock Text="IDENTIFIER / USERNAME" Style="{StaticResource FieldLabel}"/>
                 <TextBox Style="{StaticResource DefaultInput}"
                          Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,0,16"/>
 
-                <!-- SECURITY TOKEN / PASSWORD + LOST TOKEN? -->
                 <Grid Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -110,24 +96,20 @@
                              PasswordChanged="LoginPasswordBox_PasswordChanged"
                              Margin="0,0,0,8"/>
 
-                <!-- Error message -->
                 <TextBlock Text="{Binding ErrorMessage}"
                            Style="{StaticResource AuthError}"
                            Visibility="{Binding ErrorMessage,
                                Converter={StaticResource StringToVisibilityConverter}}"
                            Margin="0,0,0,8"/>
 
-                <!-- EXECUTE AUTHENTICATION -->
                 <Button Content="EXECUTE AUTHENTICATION  >"
                         Style="{StaticResource AuthExecuteButton}"
                         Command="{Binding LoginCommand}"
                         HorizontalAlignment="Stretch"
                         Margin="0,16,0,0"/>
 
-                <!-- Divider -->
                 <Rectangle Style="{StaticResource Divider}" Margin="0,28,0,20"/>
 
-                <!-- NEW INSTANCE? SWITCH TO REGISTER -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="NEW INSTANCE?  "
                                Style="{StaticResource AuthCaption}"
@@ -138,56 +120,45 @@
                 </StackPanel>
             </StackPanel>
 
-            <!-- ═══════════════════════════════════════ -->
-            <!-- REGISTER FORM                           -->
-            <!-- ═══════════════════════════════════════ -->
             <StackPanel Visibility="{Binding IsLoginMode,
                         Converter={StaticResource BoolToVisibilityInvertedConverter}}">
 
-                <!-- IDENTIFIER / USERNAME -->
                 <TextBlock Text="IDENTIFIER / USERNAME" Style="{StaticResource FieldLabel}"/>
                 <TextBox Style="{StaticResource DefaultInput}"
                          Text="{Binding NewUsername, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,0,16"/>
 
-                <!-- EMAIL ADDRESS -->
                 <TextBlock Text="EMAIL ADDRESS" Style="{StaticResource FieldLabel}"/>
                 <TextBox Style="{StaticResource DefaultInput}"
                          Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,0,16"/>
 
-                <!-- SECURITY TOKEN / PASSWORD -->
                 <TextBlock Text="SECURITY TOKEN / PASSWORD" Style="{StaticResource FieldLabel}"/>
                 <PasswordBox x:Name="registerPasswordBox"
                              Style="{StaticResource DefaultPasswordBox}"
                              PasswordChanged="RegisterPasswordBox_PasswordChanged"
                              Margin="0,0,0,16"/>
 
-                <!-- CONFIRM TOKEN -->
                 <TextBlock Text="CONFIRM TOKEN" Style="{StaticResource FieldLabel}"/>
                 <PasswordBox x:Name="confirmPasswordBox"
                              Style="{StaticResource DefaultPasswordBox}"
                              PasswordChanged="ConfirmPasswordBox_PasswordChanged"
                              Margin="0,0,0,8"/>
 
-                <!-- Error message -->
                 <TextBlock Text="{Binding ErrorMessage}"
                            Style="{StaticResource AuthError}"
                            Visibility="{Binding ErrorMessage,
                                Converter={StaticResource StringToVisibilityConverter}}"
                            Margin="0,0,0,8"/>
 
-                <!-- CREATE NEW INSTANCE -->
                 <Button Content="CREATE NEW INSTANCE  >"
                         Style="{StaticResource AuthExecuteButton}"
                         Command="{Binding RegisterCommand}"
                         HorizontalAlignment="Stretch"
                         Margin="0,16,0,0"/>
 
-                <!-- Divider -->
                 <Rectangle Style="{StaticResource Divider}" Margin="0,28,0,20"/>
 
-                <!-- ALREADY REGISTERED? SWITCH TO LOGIN -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="ALREADY REGISTERED?  "
                                Style="{StaticResource AuthCaption}"

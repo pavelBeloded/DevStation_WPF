@@ -7,6 +7,7 @@
         xmlns:pages="clr-namespace:DevStation.Views.Pages"
         mc:Ignorable="d"
         Title="DevStation"
+        Icon="pack://application:,,,/Resources/app.ico"
         Width="1280" Height="800"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource DevStationWindow}">
@@ -19,7 +20,6 @@
                       ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
 
-    <!-- DataTemplates: добавлять по одному при создании каждой страницы -->
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:HomeViewModel}">
             <pages:HomePage/>
@@ -68,13 +68,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ═══════════════════════════════════════ -->
-        <!--  SIDEBAR                                -->
-        <!-- ═══════════════════════════════════════ -->
         <Border Grid.Column="0" Style="{StaticResource SidebarContainer}">
             <DockPanel>
 
-                <!-- Логотип (кликабельная область для перетаскивания окна) -->
                 <StackPanel DockPanel.Dock="Top"
                             Orientation="Horizontal"
                             Margin="16,20,16,24"
@@ -86,7 +82,6 @@
                     <TextBlock Text="DevStation" Style="{StaticResource LogoText}"/>
                 </StackPanel>
 
-                <!-- Нижние пункты: Account, Documentation, Logout -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,12">
                     <Rectangle Style="{StaticResource Divider}" Margin="16,0,16,8"/>
 
@@ -138,7 +133,6 @@
                     </Button>
                 </StackPanel>
 
-                <!-- Основная навигация -->
                 <StackPanel>
                     <Button Command="{Binding NavigateCommand}" CommandParameter="Home">
                         <Button.Style>
@@ -258,24 +252,17 @@
             </DockPanel>
         </Border>
 
-        <!-- ═══════════════════════════════════════ -->
-        <!--  CONTENT AREA                           -->
-        <!-- ═══════════════════════════════════════ -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <!-- TopBar (Row 0) — поиск, иконки приложения, управление окном -->
-            <!-- Правый padding = 0, чтобы кнопки управления окном шли вплотную к краю -->
             <Border Grid.Row="0"
                     Style="{StaticResource TopBarContainer}"
                     Padding="16,0,0,0"
                     MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <DockPanel LastChildFill="False">
 
-                    <!-- Кнопки управления окном (крайние справа, без padding) -->
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Stretch">
                         <Button Style="{StaticResource WindowMinimizeButton}" Click="MinimizeButton_Click"
                                 ToolTip="Свернуть">
@@ -292,7 +279,6 @@
                         </Button>
                     </StackPanel>
 
-                    <!-- Иконки приложения: уведомления, настройки, профиль -->
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
                                 VerticalAlignment="Center" Margin="0,0,8,0">
                         <Rectangle Width="1" Fill="{StaticResource BorderSubtle}"
@@ -340,7 +326,6 @@
                             </Border>
                         </StackPanel>
 
-                        <!-- Dropdown результатов ($query / ?query) -->
                         <Popup x:Name="SearchPopup"
                                IsOpen="{Binding IsAnySearchOpen, Mode=OneWay}"
                                PlacementTarget="{Binding ElementName=SearchBox}"
@@ -355,7 +340,6 @@
                                     Padding="8">
                                 <StackPanel>
 
-                                    <!-- ── Snippets section ($) ── -->
                                     <StackPanel Visibility="{Binding HasDollarQuery,
                                                              Converter={StaticResource BoolToVisibilityConverter}}">
                                         <TextBlock Text="SNIPPETS" Style="{StaticResource TableHeader}"
@@ -419,13 +403,11 @@
                                                    Margin="0,6,0,2"/>
                                     </StackPanel>
 
-                                    <!-- ── MDN Docs section (?) ── -->
                                     <StackPanel Visibility="{Binding HasQuestionQuery,
                                                              Converter={StaticResource BoolToVisibilityConverter}}">
                                         <TextBlock Text="// MDN DOCS" Style="{StaticResource TableHeader}"
                                                    Margin="4,4,4,8"/>
 
-                                        <!-- Loading indicator -->
                                         <TextBlock Text="Searching docs…"
                                                    Style="{StaticResource CardId}"
                                                    HorizontalAlignment="Center"
@@ -433,7 +415,6 @@
                                                    Visibility="{Binding IsMdnLoading,
                                                                 Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                                        <!-- Results -->
                                         <ItemsControl ItemsSource="{Binding MdnResults}"
                                                       Visibility="{Binding IsMdnSearchOpen,
                                                                    Converter={StaticResource BoolToVisibilityConverter}}">
@@ -503,7 +484,6 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
 
-                                        <!-- No results -->
                                         <TextBlock Text="No documentation found."
                                                    Style="{StaticResource CardId}"
                                                    HorizontalAlignment="Center"
@@ -525,8 +505,6 @@
                 </DockPanel>
             </Border>
 
-            <!-- Контентная область (Row 1) — ContentControl отображает текущую страницу -->
-            <!-- Для добавления новой страницы: добавить DataTemplate в Window.Resources -->
             <ContentControl Grid.Row="1"
                             Content="{Binding CurrentPage}"
                             Background="{StaticResource AppBackground}"/>

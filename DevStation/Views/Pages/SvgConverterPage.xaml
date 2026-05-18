@@ -12,9 +12,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ═══════════════════════════════ -->
-        <!--  LEFT PANEL — Source SVG        -->
-        <!-- ═══════════════════════════════ -->
         <Border Grid.Column="0" Style="{StaticResource CardNoPadding}" Margin="0,0,8,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -22,7 +19,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header -->
                 <Border Grid.Row="0"
                         BorderBrush="{StaticResource BorderDefault}"
                         BorderThickness="0,0,0,1"
@@ -44,10 +40,8 @@
                     </Grid>
                 </Border>
 
-                <!-- Drop area — переключается между пустым состоянием и кодом -->
                 <Grid Grid.Row="1">
 
-                    <!-- Пустое состояние: Drop Zone (клик открывает файловый диалог) -->
                     <Border Style="{StaticResource DropZone}"
                             Margin="12"
                             AllowDrop="True"
@@ -81,7 +75,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Заполненное состояние: SVG-код -->
                     <TextBox Style="{StaticResource CodeInput}"
                              Text="{Binding SvgCode, UpdateSourceTrigger=PropertyChanged}"
                              AllowDrop="True"
@@ -95,9 +88,6 @@
             </Grid>
         </Border>
 
-        <!-- ═══════════════════════════════ -->
-        <!--  RIGHT PANEL — JSX Output       -->
-        <!-- ═══════════════════════════════ -->
         <Border Grid.Column="1" Style="{StaticResource CardNoPadding}" Margin="8,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -106,14 +96,12 @@
                     <RowDefinition Height="48"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header -->
                 <Border Grid.Row="0"
                         BorderBrush="{StaticResource BorderDefault}"
                         BorderThickness="0,0,0,1"
                         Padding="16,0">
                     <Grid>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- JS badge — маленький жёлто-оранжевый прямоугольник -->
                             <Border Background="{StaticResource AccentBrush}"
                                     CornerRadius="3" Padding="4,1"
                                     Margin="0,0,10,0" VerticalAlignment="Center">
@@ -125,7 +113,6 @@
                                        FontFamily="Segoe UI" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <!-- Правая часть: JavaScript badge + X -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
                             <Border Style="{StaticResource StatusBadge}" Margin="0,0,8,0">
@@ -142,7 +129,6 @@
                     </Grid>
                 </Border>
 
-                <!-- Код результата -->
                 <ScrollViewer Grid.Row="1"
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
@@ -153,7 +139,6 @@
                              BorderThickness="0"/>
                 </ScrollViewer>
 
-                <!-- Footer: Copy + Download -->
                 <Border Grid.Row="2"
                         BorderBrush="{StaticResource BorderDefault}"
                         BorderThickness="0,1,0,0"

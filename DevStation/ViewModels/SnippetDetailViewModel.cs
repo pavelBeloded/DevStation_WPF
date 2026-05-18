@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Data.Models;
 using DevStation.Services.Interfaces;
 using DevStation.Utils;
@@ -12,6 +13,7 @@ public class SnippetDetailViewModel : ViewModelBase
     private readonly ICurrentUserService   _currentUser;
     private readonly Action                _navigateBack;
     private readonly Action<ViewModelBase> _navigateTo;
+    private readonly AppSettings           _settings;
 
     private Snippet _snippet;
     private bool    _isInstalled;
@@ -106,7 +108,8 @@ public class SnippetDetailViewModel : ViewModelBase
     public SnippetDetailViewModel(
         Snippet snippet, bool isInstalled, bool isFavorite,
         ISnippetService snippetService, ICurrentUserService currentUser,
-        Action navigateBack, Action<ViewModelBase> navigateTo)
+        Action navigateBack, Action<ViewModelBase> navigateTo,
+        AppSettings settings)
     {
         _snippet        = snippet;
         _isInstalled    = isInstalled;
@@ -115,6 +118,7 @@ public class SnippetDetailViewModel : ViewModelBase
         _currentUser    = currentUser;
         _navigateBack   = navigateBack;
         _navigateTo     = navigateTo;
+        _settings       = settings;
 
         NavigateBackCommand = new RelayCommand(_navigateBack);
 
@@ -136,7 +140,7 @@ public class SnippetDetailViewModel : ViewModelBase
         {
             var editVm = new CreateSnippetViewModel(
                 _snippet, _snippetService, _currentUser,
-                () => _navigateTo(this), _navigateTo);
+                () => _navigateTo(this), _navigateTo, _settings);
             _navigateTo(editVm);
         });
 

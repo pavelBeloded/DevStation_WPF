@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Services.Implementations;
 using DevStation.Utils;
 using DevStation.ViewModels.Base;
@@ -57,7 +58,7 @@ public class ImageFileItem : ViewModelBase
 
     public bool IsCompleted  => Status == OptimizationStatus.Completed;
     public bool IsOptimizing => Status == OptimizationStatus.Optimizing;
-    public bool IsQueued     => Status == OptimizationStatus.Queued;
+    public bool IsQueued => Status == OptimizationStatus.Queued;
     public bool HasThumbnail => Thumbnail != null;
 
     public string OriginalSizeText  => FormatSize(OriginalSize);
@@ -84,8 +85,10 @@ public class ImageFileItem : ViewModelBase
 
 public class ImageOptimizerViewModel : ViewModelBase
 {
-    private static readonly string[] _supportedExt =
-        [".png", ".jpg", ".jpeg", ".webp", ".svg"];
+    private readonly string[] _supportedExt;
+    private readonly int      _jpegQuality;
+    private readonly int      _webpQuality;
+    private readonly long     _maxFileSizeBytes;
 
     public ObservableCollection<ImageFileItem> Files { get; } = [];
 
@@ -94,8 +97,12 @@ public class ImageOptimizerViewModel : ViewModelBase
     public RelayCommand DeleteAllCommand   { get; }
     public RelayCommand DownloadAllCommand { get; }
 
-    public ImageOptimizerViewModel()
+    public ImageOptimizerViewModel(AppSettings settings)
     {
+        _supportedExt     = [.. settings.SupportedImageFormats];
+        _jpegQuality      = settings.JpegQuality;
+        _webpQuality      = settings.WebpQuality;
+        _maxFileSizeBytes = settings.MaxFileSizeBytes;
         RemoveFileCommand = new RelayCommand<ImageFileItem>(
             item => { if (item is not null) Files.Remove(item); });
 
@@ -122,7 +129,6 @@ public class ImageOptimizerViewModel : ViewModelBase
             ToastService.Show("Queue cleared.");
         });
 
-        // OpenFolderDialog доступен в .NET 8 WPF без Windows.Forms
         DownloadAllCommand = new RelayCommand(() =>
         {
             var completed = Files.Where(f => f.IsCompleted && f.OptimizedBytes is not null).ToList();
@@ -139,14 +145,13 @@ public class ImageOptimizerViewModel : ViewModelBase
             {
                 var dest = System.IO.Path.Combine(dlg.FolderName, item.FileName);
                 try { System.IO.File.WriteAllBytes(dest, item.OptimizedBytes!); saved++; }
-                catch { /* skip locked or missing files */ }
+                catch { }
             }
             if (saved > 0)
                 ToastService.Show($"{saved} {(saved == 1 ? "file" : "files")} saved!");
         }, () => Files.Any(f => f.IsCompleted));
     }
 
-    // Вызывается из code-behind при Drop и Browse
     public async Task AddFilesAsync(IEnumerable<string> paths)
     {
         var added = new List<ImageFileItem>();
@@ -158,7 +163,7 @@ public class ImageOptimizerViewModel : ViewModelBase
             if (Files.Any(f => f.FilePath == path)) continue;
 
             var info = new System.IO.FileInfo(path);
-            if (!info.Exists || info.Length > 25 * 1024 * 1024) continue;
+            if (!info.Exists || info.Length > _maxFileSizeBytes) continue;
 
             var item = new ImageFileItem
             {
@@ -173,7 +178,6 @@ public class ImageOptimizerViewModel : ViewModelBase
             added.Add(item);
         }
 
-        // Параллельная обработка: не более (CPU-1) одновременных задач
         var maxDegree = Math.Max(2, Environment.ProcessorCount - 1);
         using var semaphore = new SemaphoreSlim(maxDegree);
 
@@ -190,7 +194,7 @@ public class ImageOptimizerViewModel : ViewModelBase
             ToastService.Show($"{added.Count} {(added.Count == 1 ? "file" : "files")} optimized!");
     }
 
-    private static async Task OptimizeAsync(ImageFileItem item)
+    private async Task OptimizeAsync(ImageFileItem item)
     {
         item.Status   = OptimizationStatus.Optimizing;
         item.Progress = 0;
@@ -199,13 +203,12 @@ public class ImageOptimizerViewModel : ViewModelBase
 
         try
         {
-            var bytes = await ImageOptimizerService.OptimizeAsync(item.FilePath, uiProgress);
+            var bytes = await ImageOptimizerService.OptimizeAsync(item.FilePath, _jpegQuality, _webpQuality, uiProgress);
             item.OptimizedBytes = bytes;
             item.OptimizedSize  = bytes.Length;
         }
         catch
         {
-            // Если оптимизация не удалась — сохраняем исходник без изменений
             item.OptimizedBytes = await System.IO.File.ReadAllBytesAsync(item.FilePath);
             item.OptimizedSize  = item.OriginalSize;
         }

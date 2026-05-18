@@ -29,7 +29,6 @@ public class AccountViewModel : ViewModelBase
     private string? _adminActionError;
     private string? _adminActionSuccess;
 
-    // ── Profile (read-only) ──────────────────────────────────────────
     public string Username    => _currentUser.CurrentUser?.Username    ?? string.Empty;
     public string Email       => _currentUser.CurrentUser?.Email       ?? string.Empty;
     public string Role        => _currentUser.IsAdmin ? "Admin" : "User";
@@ -49,7 +48,6 @@ public class AccountViewModel : ViewModelBase
         }
     }
 
-    // ── Change username ──────────────────────────────────────────────
     public string NewUsername
     {
         get => _newUsername;
@@ -68,7 +66,6 @@ public class AccountViewModel : ViewModelBase
     public bool HasUsernameError => !string.IsNullOrEmpty(_usernameError);
     public bool CanSaveUsername  => !string.IsNullOrWhiteSpace(_newUsername) && _newUsername != Username;
 
-    // ── Change password ──────────────────────────────────────────────
     public string CurrentPassword
     {
         get => _currentPassword;
@@ -100,7 +97,6 @@ public class AccountViewModel : ViewModelBase
         !string.IsNullOrWhiteSpace(_newPassword) &&
         _newPassword == _confirmPassword;
 
-    // ── Stats ────────────────────────────────────────────────────────
     public UserStats Stats
     {
         get => _stats;
@@ -112,7 +108,6 @@ public class AccountViewModel : ViewModelBase
         private set => SetProperty(ref _isLoading, value);
     }
 
-    // ── User management (admin only) ─────────────────────────────────
     public ObservableCollection<User> AllUsers
     {
         get => _allUsers;
@@ -139,7 +134,6 @@ public class AccountViewModel : ViewModelBase
         set => SetProperty(ref _adminActionSuccess, value);
     }
 
-    // ── Commands ─────────────────────────────────────────────────────
     public RelayCommand         UpdateUsernameCommand { get; }
     public RelayCommand         UpdatePasswordCommand { get; }
     public RelayCommand<object> PromoteCommand        { get; }

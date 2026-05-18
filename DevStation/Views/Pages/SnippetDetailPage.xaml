@@ -9,7 +9,6 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="40,32,40,48">
 
-            <!-- ─── Breadcrumbs ─── -->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                 <Button Style="{StaticResource GhostButton}"
                         Command="{Binding NavigateBackCommand}"
@@ -33,7 +32,6 @@
                            TextTrimming="CharacterEllipsis" MaxWidth="320"/>
             </StackPanel>
 
-            <!-- ─── Hero ─── -->
             <Grid Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -41,7 +39,6 @@
                     <ColumnDefinition Width="310"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Left: ID tag + Title + Meta row -->
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                         <TextBlock Foreground="{StaticResource TextMuted}"
@@ -85,7 +82,6 @@
                     </StackPanel>
                 </StackPanel>
 
-                <!-- Right: Stats mini-cards -->
                 <Grid Grid.Column="2" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -130,21 +126,17 @@
             <!-- ─── Separator ─── -->
             <Border Height="1" Background="{StaticResource BorderSubtle}" Margin="0,22,0,20"/>
 
-            <!-- ─── Action bar ─── -->
             <WrapPanel Margin="0,0,0,0">
-                <!-- INSTALL (чужой опубликованный, не установлен) -->
                 <Button Content="INSTALL SNIPPET" Style="{StaticResource PrimaryButton}"
                         Margin="0,0,8,8"
                         Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}"
                         Command="{Binding InstallCommand}"/>
 
-                <!-- USE (установлен или свой опубликованный) -->
                 <Button Content="USE — Copy Code" Style="{StaticResource PrimaryButton}"
                         Margin="0,0,8,8"
                         Visibility="{Binding CanUse, Converter={StaticResource BoolToVisibilityConverter}}"
                         Command="{Binding UseSnippetCommand}"/>
 
-                <!-- Favorite toggle (установлен, не свой) -->
                 <Button Style="{StaticResource OutlinedButton}"
                         Margin="0,0,8,8"
                         Visibility="{Binding CanFavorite, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -180,14 +172,12 @@
                     </StackPanel>
                 </Button>
 
-                <!-- Remove from library (установлен, не свой) -->
                 <Button Content="Remove from Library" Style="{StaticResource GhostButton}"
                         Foreground="{StaticResource StatusError}"
                         Margin="0,0,8,8"
                         Visibility="{Binding CanUninstall, Converter={StaticResource BoolToVisibilityConverter}}"
                         Command="{Binding UninstallCommand}"/>
 
-                <!-- Draft: Edit + Send to Review + Delete -->
                 <Button Content="Edit" Style="{StaticResource OutlinedButton}"
                         Margin="0,0,8,8"
                         Visibility="{Binding CanEditAndSubmit, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -202,7 +192,6 @@
                         Visibility="{Binding CanEditAndSubmit, Converter={StaticResource BoolToVisibilityConverter}}"
                         Command="{Binding DeleteCommand}"/>
 
-                <!-- Rejected: Edit + Resubmit -->
                 <Button Content="Edit" Style="{StaticResource OutlinedButton}"
                         Margin="0,0,8,8"
                         Visibility="{Binding WasRejected, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -218,7 +207,6 @@
                         Visibility="{Binding CanAdminEdit, Converter={StaticResource BoolToVisibilityConverter}}"
                         Command="{Binding EditCommand}"/>
 
-                <!-- Admin: permanent delete -->
                 <Button Content="Admin: Delete Snippet" Style="{StaticResource GhostButton}"
                         Foreground="{StaticResource StatusError}"
                         Margin="0,0,8,8"
@@ -226,7 +214,6 @@
                         Command="{Binding AdminDeleteCommand}"/>
             </WrapPanel>
 
-            <!-- ─── Status banners ─── -->
             <Border Background="{StaticResource AccentMutedBrush}"
                     BorderBrush="{StaticResource AccentBrush}" BorderThickness="1"
                     CornerRadius="6" Padding="14,10" Margin="0,12,0,0"
@@ -277,10 +264,8 @@
                     <ColumnDefinition Width="280"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- ═══ LEFT COLUMN ═══ -->
                 <StackPanel Grid.Column="0">
 
-                    <!-- Code panel -->
                     <Border Style="{StaticResource CardNoPadding}" ClipToBounds="True">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -289,7 +274,6 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <!-- Panel header -->
                             <Border Grid.Row="0" Padding="14,10"
                                     Background="{StaticResource SidebarBackground}"
                                     BorderBrush="{StaticResource BorderSubtle}"
@@ -325,7 +309,6 @@
                                          MinHeight="180"/>
                             </Border>
 
-                            <!-- Panel footer -->
                             <Border Grid.Row="2" Padding="14,8"
                                     Background="{StaticResource SidebarBackground}"
                                     BorderBrush="{StaticResource BorderSubtle}"
@@ -360,7 +343,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- Description section -->
                     <StackPanel Margin="0,32,0,0"
                                 Visibility="{Binding HasDescription, Converter={StaticResource BoolToVisibilityConverter}}">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,14"
@@ -378,10 +360,8 @@
 
                 </StackPanel>
 
-                <!-- ═══ RIGHT COLUMN (sidebar) ═══ -->
                 <StackPanel Grid.Column="2">
 
-                    <!-- Metadata card -->
                     <Border Style="{StaticResource Card}">
                         <StackPanel>
                             <TextBlock Text="// METADATA" Style="{StaticResource SectionLabel}"

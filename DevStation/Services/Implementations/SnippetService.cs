@@ -1,5 +1,7 @@
+using DevStation.Configuration;
 using DevStation.Data.DbContext;
 using DevStation.Data.Models;
+using DevStation.Data.Models.States;
 using DevStation.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +10,13 @@ namespace DevStation.Services.Implementations;
 public class SnippetService : ISnippetService
 {
     private readonly DevStationDbContext _context;
+    private readonly AppSettings         _settings;
 
-    public SnippetService(DevStationDbContext context) => _context = context;
+    public SnippetService(DevStationDbContext context, AppSettings settings)
+    {
+        _context  = context;
+        _settings = settings;
+    }
 
     public async Task<IEnumerable<Snippet>> GetPublicSnippetsAsync(string? searchQuery = null, string? language = null)
     {
@@ -74,7 +81,7 @@ public class SnippetService : ISnippetService
                          (us.Snippet.Title.Contains(query) ||
                           (us.Snippet.Tags != null && us.Snippet.Tags.Contains(query))))
             .Include(us => us.Snippet)
-            .Take(8)
+            .Take(_settings.SearchResultsLimit)
             .ToListAsync();
     }
 
@@ -89,20 +96,23 @@ public class SnippetService : ISnippetService
     public async Task<Snippet> CreateSnippetAsync(int creatorId, string title, string code,
         string? language = null, string? description = null, string? tags = null)
     {
-        var snippet = new Snippet
-        {
-            CreatorId = creatorId,
-            Title = title,
-            Code = code,
-            Language = language,
-            Description = description,
-            Tags = tags
-        };
+        var snippet = new SnippetBuilder()
+            .WithCreator(creatorId)
+            .WithTitle(title)
+            .WithCode(code)
+            .WithLanguage(language)
+            .WithDescription(description)
+            .WithTags(tags)
+            .Build();
+
+        await using var tx = await _context.Database.BeginTransactionAsync();
         _context.Snippets.Add(snippet);
         await _context.SaveChangesAsync();
 
         _context.UserSnippets.Add(new UserSnippet { UserId = creatorId, SnippetId = snippet.Id });
         await _context.SaveChangesAsync();
+        await tx.CommitAsync();
+
         return snippet;
     }
 
@@ -174,8 +184,8 @@ public class SnippetService : ISnippetService
     {
         var snippet = await _context.Snippets.FindAsync(snippetId);
         if (snippet == null) return;
-        snippet.Status = SnippetStatus.PendingReview;
-        snippet.UpdatedAt = DateTime.UtcNow;
+
+        SnippetStateFactory.GetState(snippet.Status).Submit(snippet);
         await _context.SaveChangesAsync();
     }
 
@@ -184,9 +194,11 @@ public class SnippetService : ISnippetService
         var snippet = await _context.Snippets.FindAsync(snippetId);
         if (snippet == null) return;
 
-        snippet.Status = status == ReviewStatus.Approved ? SnippetStatus.Published : SnippetStatus.Rejected;
-        if (status == ReviewStatus.Approved) snippet.IsPublic = true;
-        snippet.UpdatedAt = DateTime.UtcNow;
+        var state = SnippetStateFactory.GetState(snippet.Status);
+        if (status == ReviewStatus.Approved)
+            state.Approve(snippet);
+        else
+            state.Reject(snippet);
 
         _context.SnippetReviews.Add(new SnippetReview
         {

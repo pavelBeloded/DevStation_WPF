@@ -10,7 +10,6 @@ using System.Text.Json.Serialization;
 
 namespace DevStation.Services.Implementations;
 
-// ── Search API response ────────────────────────────────────────────────
 file class MdnApiResponse
 {
     [JsonPropertyName("documents")]
@@ -29,7 +28,6 @@ file class MdnDocument
     public string? Summary { get; set; }
 }
 
-// ── Document detail API response ───────────────────────────────────────
 file class MdnDocumentResponse
 {
     [JsonPropertyName("doc")]

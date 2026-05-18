@@ -153,7 +153,34 @@ public class ConverterViewModel : ViewModelBase
         var isColorValue = value is "currentColor" or "black" or "#000" or "#000000";
         if (jsxName is "fill" or "stroke" && isColorValue) return "{color}";
 
+        if (jsxName == "style") return ToJsxStyle(value);
+
         return $"\"{value}\"";
+    }
+
+    private static string ToJsxStyle(string css)
+    {
+        var props = new Dictionary<string, string>();
+
+        foreach (var part in css.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var idx = part.IndexOf(':');
+            if (idx < 0) continue;
+            var prop = KebabToCamelCase(part[..idx].Trim()); 
+            var val  = part[(idx + 1)..].Trim();
+            props[prop] = val;
+        }
+
+        var entries = props.Select(kv => $"{kv.Key}: '{kv.Value}'");
+        return $"{{{{{string.Join(", ", entries)}}}}}";
+    }
+
+    private static string KebabToCamelCase(string kebab)
+    {
+        var parts = kebab.Split('-');
+        if (parts.Length == 1) return kebab;
+        return parts[0] + string.Concat(
+            parts.Skip(1).Select(p => p.Length > 0 ? char.ToUpper(p[0]) + p[1..] : p));
     }
 
     private void ExecuteCopy()

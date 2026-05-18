@@ -216,7 +216,6 @@ public class MockGeneratorViewModel : ViewModelBase
         sb.AppendLine("GO");
         sb.AppendLine();
 
-        // IDENTITY columns are populated automatically — exclude them from INSERT
         var insertFields = Fields.Where(f => f.TypeKey != "id").ToList();
         var colNames = string.Join(", ", insertFields.Select(f => f.Name));
         for (var i = 1; i <= RecordCount; i++)

@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Data.Models;
 using DevStation.Services.Interfaces;
 using DevStation.Utils;
@@ -107,7 +108,7 @@ public class CreateSnippetViewModel : ViewModelBase
         _                    => ".txt"
     };
 
-    public List<string> Languages { get; } = ["JavaScript", "TypeScript", "CSS", "HTML", "Python", "SQL", "Other"];
+    public List<string> Languages { get; }
 
     public RelayCommand NavigateBackCommand    { get; }
     public RelayCommand SaveDraftCommand       { get; }
@@ -116,7 +117,8 @@ public class CreateSnippetViewModel : ViewModelBase
     public CreateSnippetViewModel(
         Snippet? editingSnippet,
         ISnippetService snippetService, ICurrentUserService currentUser,
-        Action navigateBack, Action<ViewModelBase> navigateTo)
+        Action navigateBack, Action<ViewModelBase> navigateTo,
+        AppSettings settings)
     {
         _editingSnippet = editingSnippet;
         _snippetService = snippetService;
@@ -124,6 +126,7 @@ public class CreateSnippetViewModel : ViewModelBase
         _navigateBack   = navigateBack;
         _navigateTo     = navigateTo;
         IsEditMode      = editingSnippet != null;
+        Languages       = settings.Languages;
 
         if (editingSnippet != null)
         {

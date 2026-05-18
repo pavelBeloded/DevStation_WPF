@@ -1,3 +1,4 @@
+using DevStation.Configuration;
 using DevStation.Data.Models;
 using DevStation.Services.Interfaces;
 using DevStation.ViewModels.Base;
@@ -82,6 +83,7 @@ public class HomeViewModel : ViewModelBase
     private readonly ICurrentUserService   _currentUser;
     private readonly Action<string>        _navigateByKey;
     private readonly Action<ViewModelBase> _navigateTo;
+    private readonly AppSettings           _settings;
 
     private int    _snippetCount;
     private int    _authoredCount;
@@ -163,13 +165,15 @@ public class HomeViewModel : ViewModelBase
         IMdnSearchService     mdnService,
         ICurrentUserService   currentUser,
         Action<string>        navigateByKey,
-        Action<ViewModelBase> navigateTo)
+        Action<ViewModelBase> navigateTo,
+        AppSettings           settings)
     {
         _snippetService = snippetService;
         _mdnService     = mdnService;
         _currentUser    = currentUser;
         _navigateByKey  = navigateByKey;
         _navigateTo     = navigateTo;
+        _settings       = settings;
 
         NavigateCommand = new RelayCommand<string>(key =>
         {
@@ -181,7 +185,7 @@ public class HomeViewModel : ViewModelBase
             var vm = new CreateSnippetViewModel(
                 null, _snippetService, _currentUser,
                 () => { _ = LoadDataAsync(); _navigateTo(this); },
-                _navigateTo);
+                _navigateTo, _settings);
             _navigateTo(vm);
         });
 

@@ -16,7 +16,6 @@
             <TextBlock Text="Manage your profile and security settings"
                        Style="{StaticResource PageSubtitle}"/>
 
-            <!-- ── Two-column layout ───────────────────────────── -->
             <Grid Margin="0,24,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -24,16 +23,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- ── LEFT: Profile + Activity ───────────────── -->
                 <StackPanel Grid.Column="0">
 
-                    <!-- Profile Card -->
                     <Border Style="{StaticResource Card}">
                         <StackPanel>
                             <TextBlock Text="PROFILE" Style="{StaticResource TableHeader}"
                                        Margin="0,0,0,16"/>
 
-                            <!-- Avatar + name + email -->
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                                 <Border Width="56" Height="56" CornerRadius="28"
                                         Background="{StaticResource AccentMutedBrush}"
@@ -89,7 +85,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Activity Stats Card -->
                     <Border Style="{StaticResource Card}" Margin="0,16,0,0">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
@@ -163,10 +158,8 @@
                     </Border>
                 </StackPanel>
 
-                <!-- ── RIGHT: Change Username + Change Password ── -->
                 <StackPanel Grid.Column="2">
 
-                    <!-- Change Username Card -->
                     <Border Style="{StaticResource Card}">
                         <StackPanel>
                             <TextBlock Text="CHANGE USERNAME" Style="{StaticResource TableHeader}"
@@ -244,13 +237,11 @@
                 </StackPanel>
             </Grid>
 
-            <!-- ── ADMIN: User Management ──────────────────────── -->
             <Border Margin="0,24,0,0"
                     Visibility="{Binding IsAdmin,
                                  Converter={StaticResource BoolToVisibilityConverter}}">
                 <StackPanel>
 
-                    <!-- Section header -->
                     <Grid Margin="0,0,0,16">
                         <StackPanel>
                             <TextBlock Text="User Management"
@@ -270,11 +261,9 @@
                         </Border>
                     </Grid>
 
-                    <!-- Users card -->
                     <Border Style="{StaticResource CardNoPadding}">
                         <StackPanel>
 
-                            <!-- Search -->
                             <Border Padding="16,12"
                                     BorderBrush="{StaticResource BorderSubtle}"
                                     BorderThickness="0,0,0,1">
@@ -293,8 +282,6 @@
                                            FontSize="13" FontFamily="Segoe UI"
                                            Foreground="{StaticResource StatusReady}"/>
                             </Border>
-
-                            <!-- Error message -->
                             <Border Padding="16,10"
                                     BorderBrush="{StaticResource BorderSubtle}"
                                     BorderThickness="0,0,0,1"
@@ -305,7 +292,6 @@
                                            Foreground="{StaticResource StatusError}"/>
                             </Border>
 
-                            <!-- Table header -->
                             <Border Padding="16,10"
                                     Background="{StaticResource AppBackground}">
                                 <Grid>
@@ -323,7 +309,6 @@
                                 </Grid>
                             </Border>
 
-                            <!-- User rows -->
                             <ItemsControl ItemsSource="{Binding FilteredUsers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -347,7 +332,6 @@
                                                                Margin="0,2,0,0"/>
                                                 </StackPanel>
 
-                                                <!-- Role badge -->
                                                 <Border Grid.Column="1" VerticalAlignment="Center"
                                                         HorizontalAlignment="Left"
                                                         CornerRadius="4" Padding="8,3">
@@ -377,11 +361,9 @@
                                                     </TextBlock>
                                                 </Border>
 
-                                                <!-- Actions -->
                                                 <StackPanel Grid.Column="2" Orientation="Horizontal"
                                                             VerticalAlignment="Center">
 
-                                                    <!-- Make Admin — visible only for User role -->
                                                     <Button Content="Make Admin"
                                                             Command="{Binding DataContext.PromoteCommand,
                                                                       RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -398,7 +380,6 @@
                                                         </Button.Style>
                                                     </Button>
 
-                                                    <!-- Revoke Admin — visible only for Admin role -->
                                                     <Button Content="Revoke Admin"
                                                             Margin="8,0,0,0"
                                                             Command="{Binding DataContext.DemoteCommand,

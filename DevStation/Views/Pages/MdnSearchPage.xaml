@@ -14,31 +14,26 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ═══════════════════════ LEFT PANEL ═══════════════════════ -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Header: title + search box + indicators -->
             <StackPanel Grid.Row="0">
                 <TextBlock Style="{StaticResource PageTitle}" Text="MDN Search"/>
                 <TextBlock Style="{StaticResource PageSubtitle}"
                            Text="Live JavaScript &amp; Web API documentation lookup."
                            Margin="0,4,0,0"/>
 
-                <!-- Search input -->
                 <Grid Margin="0,16,0,0">
                     <TextBox Style="{StaticResource DefaultInput}"
                              Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                              Height="44" Padding="40,0,44,0"/>
-                    <!-- Search icon -->
                     <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="14"
                                Foreground="{StaticResource TextMuted}"
                                VerticalAlignment="Center" HorizontalAlignment="Left"
                                Margin="12,0" IsHitTestVisible="False"/>
-                    <!-- Clear button -->
                     <Button Style="{StaticResource GhostButton}"
                             HorizontalAlignment="Right" Width="32" Height="32" Padding="0"
                             Command="{Binding ClearCommand}"
@@ -48,7 +43,6 @@
                     </Button>
                 </Grid>
 
-                <!-- Status row -->
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                     <TextBlock Text="Searching..."
                                Foreground="{StaticResource TextSecondary}"
@@ -66,11 +60,9 @@
                 </StackPanel>
             </StackPanel>
 
-            <!-- Results + empty states -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
                 <StackPanel>
 
-                    <!-- Results count header -->
                     <TextBlock FontSize="11" FontFamily="Segoe UI"
                                Foreground="{StaticResource TextSecondary}"
                                Margin="0,0,0,6"
@@ -81,7 +73,6 @@
                         <Run Text=")"/>
                     </TextBlock>
 
-                    <!-- Results list -->
                     <ItemsControl ItemsSource="{Binding SearchResults}"
                                   Visibility="{Binding HasResults,
                                                Converter={StaticResource BoolToVisibilityConverter}}">
@@ -131,7 +122,6 @@
                                             </Border>
                                         </Grid>
 
-                                        <!-- Summary -->
                                         <TextBlock Grid.Row="1"
                                                    Text="{Binding Summary}"
                                                    Style="{StaticResource CardBody}"
@@ -144,7 +134,6 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!-- No results state -->
                     <StackPanel HorizontalAlignment="Center" Margin="0,32,0,0"
                                 Visibility="{Binding HasNoResults,
                                              Converter={StaticResource BoolToVisibilityConverter}}">
@@ -156,7 +145,6 @@
                                    HorizontalAlignment="Center" Margin="0,8,0,0"/>
                     </StackPanel>
 
-                    <!-- Initial / empty query state -->
                     <StackPanel HorizontalAlignment="Center" Margin="0,48,0,0"
                                 Visibility="{Binding SearchQuery,
                                              Converter={StaticResource StringToVisibilityInvertedConverter}}">
@@ -179,11 +167,9 @@
             </ScrollViewer>
         </Grid>
 
-        <!-- ═══════════════════════ RIGHT PANEL ═══════════════════════ -->
         <Border Grid.Column="2" Style="{StaticResource CardNoPadding}" ClipToBounds="True">
             <Grid>
 
-                <!-- Empty state: no result selected -->
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                             Visibility="{Binding IsResultSelected,
                                          Converter={StaticResource BoolToVisibilityInvertedConverter}}">
@@ -198,15 +184,12 @@
                                HorizontalAlignment="Center" Margin="0,8,0,0"/>
                 </StackPanel>
 
-                <!-- Detail view: result selected -->
                 <Grid Visibility="{Binding IsResultSelected,
                                    Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <!-- ── Header ── -->
                     <Border Grid.Row="0"
                             Padding="20,14"
                             BorderBrush="{StaticResource BorderDefault}"
@@ -217,7 +200,6 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Title + badges -->
                             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding SelectedResult.Title}"
                                            Style="{StaticResource SectionTitle}"
@@ -241,7 +223,6 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <!-- Action buttons -->
                             <StackPanel Grid.Column="1" Orientation="Horizontal"
                                         VerticalAlignment="Center">
                                 <Button Content="Copy URL" Style="{StaticResource GhostButton}"
@@ -253,7 +234,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- ── Loading details ── -->
                     <Border Grid.Row="1" Padding="20"
                             Visibility="{Binding IsLoadingDetails,
                                          Converter={StaticResource BoolToVisibilityConverter}}">
@@ -263,13 +243,11 @@
                                    VerticalAlignment="Center"/>
                     </Border>
 
-                    <!-- ── Detail content ── -->
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
                                   Visibility="{Binding IsLoadingDetails,
                                                Converter={StaticResource BoolToVisibilityInvertedConverter}}">
                         <StackPanel Margin="20,16,20,24">
 
-                            <!-- SUMMARY -->
                             <StackPanel Visibility="{Binding SelectedDetails.Summary,
                                                      Converter={StaticResource StringToVisibilityConverter}}">
                                 <Grid Margin="0,0,0,8">
@@ -284,7 +262,6 @@
                                            TextWrapping="Wrap" LineHeight="22"/>
                             </StackPanel>
 
-                            <!-- SYNTAX -->
                             <StackPanel Margin="0,20,0,0"
                                         Visibility="{Binding HasSyntax,
                                                      Converter={StaticResource BoolToVisibilityConverter}}">
@@ -308,7 +285,6 @@
                                 </Border>
                             </StackPanel>
 
-                            <!-- DESCRIPTION -->
                             <StackPanel Margin="0,20,0,0"
                                         Visibility="{Binding HasDescription,
                                                      Converter={StaticResource BoolToVisibilityConverter}}">
@@ -319,7 +295,6 @@
                                            TextWrapping="Wrap" LineHeight="22"/>
                             </StackPanel>
 
-                            <!-- EXAMPLES -->
                             <StackPanel Margin="0,20,0,0"
                                         Visibility="{Binding HasExamples,
                                                      Converter={StaticResource BoolToVisibilityConverter}}">
@@ -362,7 +337,6 @@
                                 </Border>
                             </StackPanel>
 
-                            <!-- MDN URL -->
                             <Border Margin="0,24,0,0"
                                     Background="{StaticResource InputBackground}"
                                     BorderBrush="{StaticResource BorderSubtle}"

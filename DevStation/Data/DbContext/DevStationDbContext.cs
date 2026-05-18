@@ -18,21 +18,18 @@ public class DevStationDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // User unique constraints
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasIndex(u => u.Username).IsUnique();
             entity.HasIndex(u => u.Email).IsUnique();
         });
 
-        // Snippet -> Creator (restrict delete to prevent cascade)
         modelBuilder.Entity<Snippet>()
             .HasOne(s => s.Creator)
             .WithMany(u => u.CreatedSnippets)
             .HasForeignKey(s => s.CreatorId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // UserSnippet composite PK
         modelBuilder.Entity<UserSnippet>()
             .HasKey(us => new { us.UserId, us.SnippetId });
 
@@ -54,7 +51,6 @@ public class DevStationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(us => us.FolderId)
             .OnDelete(DeleteBehavior.ClientSetNull);
 
-        // Folder self-reference
         modelBuilder.Entity<Folder>()
             .HasOne(f => f.ParentFolder)
             .WithMany(f => f.ChildFolders)
@@ -67,7 +63,6 @@ public class DevStationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(f => f.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // SnippetReview
         modelBuilder.Entity<SnippetReview>()
             .HasOne(sr => sr.Snippet)
             .WithMany(s => s.Reviews)
@@ -80,7 +75,6 @@ public class DevStationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(sr => sr.ReviewerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // MdnCache index
         modelBuilder.Entity<MdnCache>()
             .HasIndex(m => m.SearchTerm);
     }

@@ -27,7 +27,6 @@ public class LoginViewModel : ViewModelBase
         set => SetProperty(ref _username, value);
     }
 
-    /// <summary>Set from code-behind (login PasswordBox).</summary>
     public string Password
     {
         get => _password;
@@ -46,14 +45,12 @@ public class LoginViewModel : ViewModelBase
         set => SetProperty(ref _email, value);
     }
 
-    /// <summary>Set from code-behind (register PasswordBox).</summary>
     public string RegisterPassword
     {
         get => _registerPassword;
         set => SetProperty(ref _registerPassword, value);
     }
 
-    /// <summary>Set from code-behind (confirm PasswordBox).</summary>
     public string ConfirmPassword
     {
         get => _confirmPassword;

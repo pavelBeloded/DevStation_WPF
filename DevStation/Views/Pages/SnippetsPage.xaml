@@ -15,13 +15,10 @@
             <ColumnDefinition Width="320"/>
         </Grid.ColumnDefinitions>
 
-        <!-- ═══════════════════════════════════════════════ -->
-        <!--  LEFT — основной контент                        -->
-        <!-- ═══════════════════════════════════════════════ -->
+   
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,0,0,48">
 
-                <!-- ─── Header ─── -->
                 <Grid>
                     <StackPanel>
                         <TextBlock Style="{StaticResource PageTitle}">
@@ -42,7 +39,6 @@
                     </Button>
                 </Grid>
 
-                <!-- ─── Stat strip ─── -->
                 <Border Style="{StaticResource StatStrip}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -55,7 +51,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Total -->
                         <StackPanel Grid.Column="0" Margin="0,0,16,0">
                             <TextBlock Text="// TOTAL SNIPPETS" Style="{StaticResource SectionLabel}"/>
                             <TextBlock Text="{Binding TotalSnippetsCount}"
@@ -64,7 +59,6 @@
                         </StackPanel>
                         <Rectangle Grid.Column="1" Fill="{StaticResource BorderSubtle}"/>
 
-                        <!-- Installed -->
                         <StackPanel Grid.Column="2" Margin="16,0">
                             <TextBlock Text="// INSTALLED" Style="{StaticResource SectionLabel}"/>
                             <TextBlock Text="{Binding InstalledCount}"
@@ -73,7 +67,6 @@
                         </StackPanel>
                         <Rectangle Grid.Column="3" Fill="{StaticResource BorderSubtle}"/>
 
-                        <!-- Authored -->
                         <StackPanel Grid.Column="4" Margin="16,0">
                             <TextBlock Text="// AUTHORED" Style="{StaticResource SectionLabel}"/>
                             <TextBlock Text="{Binding AuthoredCount}"
@@ -82,7 +75,6 @@
                         </StackPanel>
                         <Rectangle Grid.Column="5" Fill="{StaticResource BorderSubtle}"/>
 
-                        <!-- Pending (admin only, always shown but 0 if not admin) -->
                         <StackPanel Grid.Column="6" Margin="16,0,0,0">
                             <TextBlock Text="// PENDING REVIEW" Style="{StaticResource SectionLabel}"/>
                             <TextBlock Text="{Binding PendingCount}"
@@ -92,7 +84,6 @@
                     </Grid>
                 </Border>
 
-                <!-- ─── Tabs ─── -->
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                     <Button Command="{Binding ShowGlobalTabCommand}" Margin="0,0,4,0"
                             Padding="14,0">
@@ -141,10 +132,8 @@
                     </Button>
                 </StackPanel>
 
-                <!-- Tab bottom separator -->
                 <Border Height="1" Background="{StaticResource BorderSubtle}" Margin="0,0,0,14"/>
 
-                <!-- ─── Search ─── -->
                 <Grid Margin="0,0,0,12">
                     <TextBox Style="{StaticResource DefaultInput}"
                              Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
@@ -155,7 +144,6 @@
                                Margin="10,0" IsHitTestVisible="False"/>
                 </Grid>
 
-                <!-- ─── Filter chips (My Library only) ─── -->
                 <WrapPanel Margin="0,0,0,14"
                            Visibility="{Binding IsMyLibraryTab,
                                         Converter={StaticResource BoolToVisibilityConverter}}">
@@ -226,7 +214,6 @@
                     </Button>
                 </WrapPanel>
 
-                <!-- ─── Global Pool grid ─── -->
                 <ItemsControl ItemsSource="{Binding PublicSnippets}"
                               Visibility="{Binding IsGlobalTab,
                                            Converter={StaticResource BoolToVisibilityConverter}}">
@@ -247,7 +234,6 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Head: ID + Title + Meta + Badge -->
                                     <Grid Grid.Row="0" Margin="16,14,16,10">
                                         <StackPanel Margin="0,0,96,0">
                                             <TextBlock FontFamily="Consolas" FontSize="10"
@@ -279,7 +265,6 @@
                                             </StackPanel>
                                         </StackPanel>
 
-                                        <!-- Install / Installed badge (top-right) -->
                                         <Border Style="{StaticResource InstalledBadge}"
                                                 HorizontalAlignment="Right" VerticalAlignment="Top"
                                                 Visibility="{Binding IsInstalled,
@@ -303,7 +288,6 @@
                                         </Border>
                                     </Grid>
 
-                                    <!-- Code preview with header -->
                                     <Border Grid.Row="1" Margin="10,0,10,8"
                                             Background="{StaticResource CodeBackground}"
                                             BorderBrush="{StaticResource BorderDefault}"
@@ -344,7 +328,6 @@
                                         </Grid>
                                     </Border>
 
-                                    <!-- Tags -->
                                     <ItemsControl Grid.Row="2" ItemsSource="{Binding TagItems}"
                                                   Margin="10,0,10,8"
                                                   Visibility="{Binding HasTags,
@@ -365,7 +348,6 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
 
-                                    <!-- Footer -->
                                     <Border Grid.Row="3"
                                             Background="{StaticResource SidebarBackground}"
                                             BorderBrush="{StaticResource BorderSubtle}"
@@ -412,7 +394,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!-- ─── My Library grid ─── -->
                 <ItemsControl ItemsSource="{Binding MyLibrary}"
                               Visibility="{Binding IsMyLibraryTab,
                                            Converter={StaticResource BoolToVisibilityConverter}}">
@@ -433,7 +414,6 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Head: ID + Title + Meta + USE badge -->
                                     <Grid Grid.Row="0" Margin="16,14,16,10">
                                         <StackPanel Margin="0,0,80,0">
                                             <TextBlock FontFamily="Consolas" FontSize="10"
@@ -470,7 +450,6 @@
                                         </Button>
                                     </Grid>
 
-                                    <!-- Code preview -->
                                     <Border Grid.Row="1" Margin="10,0,10,8"
                                             Background="{StaticResource CodeBackground}"
                                             BorderBrush="{StaticResource BorderDefault}"
@@ -507,7 +486,6 @@
                                         </Grid>
                                     </Border>
 
-                                    <!-- Footer -->
                                     <Border Grid.Row="2"
                                             Background="{StaticResource SidebarBackground}"
                                             BorderBrush="{StaticResource BorderSubtle}"
@@ -550,9 +528,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ═══════════════════════════════════════════════ -->
-        <!--  RIGHT — Admin Panel                            -->
-        <!-- ═══════════════════════════════════════════════ -->
+    
         <Border Grid.Column="2" Style="{StaticResource CardNoPadding}"
                 VerticalAlignment="Top"
                 Visibility="{Binding IsAdmin,
@@ -564,7 +540,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header -->
                 <Border Grid.Row="0" Padding="14,12"
                         Background="{StaticResource SidebarBackground}"
                         BorderBrush="{StaticResource BorderSubtle}"
@@ -589,8 +564,6 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-
-                <!-- Pending reviews list -->
                 <ItemsControl Grid.Row="1"
                               ItemsSource="{Binding PendingReviews}">
                     <ItemsControl.ItemTemplate>
@@ -598,7 +571,6 @@
                             <Border BorderBrush="{StaticResource BorderSubtle}"
                                     BorderThickness="0,0,0,1" Padding="14,12">
                                 <StackPanel>
-                                    <!-- Name + PENDING badge -->
                                     <Grid Margin="0,0,0,8">
                                         <StackPanel>
                                             <TextBlock Text="{Binding Title}"
@@ -621,7 +593,6 @@
                                         </Border>
                                     </Grid>
 
-                                    <!-- Code preview -->
                                     <Border Background="{StaticResource CodeBackground}"
                                             BorderBrush="{StaticResource BorderDefault}"
                                             BorderThickness="1" CornerRadius="6"
@@ -637,14 +608,12 @@
                                                  Focusable="False"/>
                                     </Border>
 
-                                    <!-- Meta: lang -->
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                         <TextBlock Text="{Binding Language}"
                                                    FontFamily="Consolas" FontSize="11"
                                                    Foreground="{StaticResource TextSecondary}"/>
                                     </StackPanel>
 
-                                    <!-- Actions: Reject / Edit / View / Approve -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -688,7 +657,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!-- Footer -->
                 <Border Grid.Row="2" Padding="14,10"
                         Background="{StaticResource SidebarBackground}">
                     <TextBlock FontSize="11" FontFamily="Consolas"

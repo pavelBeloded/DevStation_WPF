@@ -9,7 +9,6 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="40,32,40,48">
 
-            <!-- Greeting row -->
             <Grid Margin="0,0,0,28">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="DevStation" Style="{StaticResource PageTitle}"/>
@@ -30,7 +29,6 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Stats bar -->
             <Grid Margin="0,0,0,32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -79,7 +77,6 @@
                 </Border>
             </Grid>
 
-            <!-- Quick actions -->
             <TextBlock Text="Quick Actions" Style="{StaticResource SectionTitle}" Margin="0,0,0,14"/>
             <WrapPanel Margin="0,0,0,32">
                 <Button Content="+ New Snippet" Style="{StaticResource PrimaryButton}"
@@ -118,7 +115,6 @@
                 </Button>
             </WrapPanel>
 
-            <!-- Tool cards 2x2 -->
             <TextBlock Text="Tools" Style="{StaticResource SectionTitle}" Margin="0,0,0,14"/>
             <Grid Margin="0,0,0,32">
                 <Grid.ColumnDefinitions>
@@ -132,7 +128,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Snippet Library -->
                 <Border Grid.Column="0" Grid.Row="0"
                         Style="{StaticResource ToolCard}" Padding="20,16" ClipToBounds="True">
                     <Border.InputBindings>
@@ -173,7 +168,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- SVG Converter -->
                 <Border Grid.Column="2" Grid.Row="0"
                         Style="{StaticResource ToolCard}" Padding="20,16">
                     <Border.InputBindings>
@@ -212,7 +206,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Image Optimizer -->
                 <Border Grid.Column="0" Grid.Row="2"
                         Style="{StaticResource ToolCard}" Padding="20,16">
                     <Border.InputBindings>
@@ -257,7 +250,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Mock Data Generator -->
                 <Border Grid.Column="2" Grid.Row="2"
                         Style="{StaticResource ToolCard}" Padding="20,16" ClipToBounds="True">
                     <Border.InputBindings>
@@ -296,7 +288,6 @@
                 </Border>
             </Grid>
 
-            <!-- Recent snippets -->
             <TextBlock Text="Recent Snippets" Style="{StaticResource SectionTitle}" Margin="0,0,0,12"/>
 
             <TextBlock Text="No recent snippets — add a snippet to your library"
